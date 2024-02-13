@@ -1,12 +1,10 @@
+import Image from "next/image";
+
 export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       {/* Logo */}
-      <img
-        src="/bichitos-logo.webp"
-        alt="Logo"
-        className="w-16 h-16 mb-4 md:w-20 md:h-20"
-      />
+      <Image src="/bichitos-logo.webp" alt="Logo" width="120" height="120" />
       <h1 className="text-xl font-semibold text-blue-500 mb-4">
         Bichitos administración
       </h1>
