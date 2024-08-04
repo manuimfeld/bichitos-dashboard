@@ -35,7 +35,7 @@ export default function Home() {
 
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/sales`,
+        `${process.env.API_URL}/sales`,
         saleData,
         {
           headers: {
