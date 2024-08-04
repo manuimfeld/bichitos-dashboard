@@ -52,23 +52,22 @@ export default function Home() {
 
   return (
     <main className="text-black text-xs bg-white col-span-2 row-start-2 p-4 overflow-y-auto w-[calc(100%_-_32px)] mx-auto mt-4 lg:mx-0 lg:w-full">
-      <form onSubmit={handleSubmit} className="bg-white p-4 w-fit">
+      <form onSubmit={handleSubmit} className="bg-white p-4">
         <p className="mb-2">Método de pago</p>
-        <div className="flex items-center mb-2">
+        <div className="flex-col md:flex-row md:flex-wrap mb-2 gap-2">
           {["Efectivo", "Transferencia", "Débito", "Crédito"].map((method) => (
-            <>
+            <div key={method}>
               <input
-                key={method}
                 type="radio"
                 id={method}
                 name="payment_method"
                 value={method}
                 className="mr-2"
               />
-              <label htmlFor={method} className="ml-1 mr-4 text-xs">
+              <label htmlFor={method} className="mr-2 text-xs">
                 {method}
               </label>
-            </>
+            </div>
           ))}
         </div>
         <p className="mt-3 mb-1">Monto</p>
