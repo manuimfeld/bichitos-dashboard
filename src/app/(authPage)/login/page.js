@@ -21,13 +21,16 @@ export default function Login() {
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      const response = await fetch(`${process.env.API_URL}/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await axios.post(
+        `${process.env.API_URL}/auth/login`,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      );
 
       if (response.ok) {
         const result = await response.json();
