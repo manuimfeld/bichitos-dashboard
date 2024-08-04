@@ -5,6 +5,7 @@ import reduceAmount from "../utils/reduceAmunt";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
 import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
 
 export default function Sales() {
   const [sales, setSales] = useState([]);
@@ -50,7 +51,18 @@ export default function Sales() {
         <Skeleton className="h-[85px] w-full mt-4" />
       </div>
     );
-  if (error) return;
+  if (error)
+    return (
+      <div className="text-black text-xs bg-white col-span-2 row-start-2 p-4 overflow-y-auto w-[calc(100%_-_32px)] mx-auto mt-4 lg:mx-0 lg:w-full">
+        <p>Ha ocurrido un error, por favor inicia sesión</p>
+        <Link
+          href="/login"
+          className="inline-block mt-2 px-2 py-2 bg-[#039ABD] rounded-full text-white"
+        >
+          Iniciar sesión
+        </Link>
+      </div>
+    );
   <div className="text-black text-xs bg-white col-span-2 row-start-2 p-4 overflow-y-auto w-[calc(100%_-_32px)] mx-auto mt-4 lg:mx-0 lg:w-full">
     <p className="mx-auto w-fit">{error}</p>
   </div>;
