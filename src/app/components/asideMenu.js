@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { logout } from "../utils/logout";
 import Image from "next/image";
-import { SlHome } from "react-icons/sl";
 
 export default function AsideMenu() {
   return (
