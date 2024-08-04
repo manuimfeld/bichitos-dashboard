@@ -20,13 +20,16 @@ export default function Sales() {
   useEffect(() => {
     const fetchSales = async () => {
       try {
-        const response = await axios.get(`${NEXT_PUBLIC_API}/sales/today`, {
-          headers: {
-            authorization: `${getToken()}`,
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-        }); // Esto llama a la API Route que hemos creado
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API}/sales/today`,
+          {
+            headers: {
+              authorization: `${getToken()}`,
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+            },
+          }
+        ); // Esto llama a la API Route que hemos creado
         setSales(response.data);
       } catch (error) {
         setError("Error fetching sales");

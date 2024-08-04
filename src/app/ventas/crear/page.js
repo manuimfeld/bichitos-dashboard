@@ -34,13 +34,17 @@ export default function Home() {
     };
 
     try {
-      const response = await axios.post(`${NEXT_PUBLIC_API}/sales`, saleData, {
-        headers: {
-          authorization: `${getToken()}`,
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-      });
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API}/sales`,
+        saleData,
+        {
+          headers: {
+            authorization: `${getToken()}`,
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      );
 
       console.log("Venta guardada:", response.data);
       form.reset(); // Limpiar el formulario
