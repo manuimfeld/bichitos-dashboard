@@ -1,6 +1,13 @@
 "use client";
 
+import axios from "axios";
+
 export default function Home() {
+  function getToken() {
+    let token = localStorage.getItem("authorization");
+    return token;
+  }
+
   const paymentMethodMapping = {
     Efectivo: 1,
     Transferencia: 2,
@@ -26,24 +33,21 @@ export default function Home() {
         paymentMethodMapping[form.elements.payment_method.value],
     };
 
-    console.log(saleData);
-
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/sales`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(saleData),
-      });
+      const response = await axios.post(
+        `http://localhost:3001/api/sales`,
+        saleData,
+        {
+          headers: {
+            authorization: `${getToken()}`,
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      );
 
-      if (response.ok) {
-        const result = await response.json();
-        console.log("Venta guardada:", result);
-        form.reset(); // Limpiar el formulario
-      } else {
-        console.error("Error al guardar la venta:", response.statusText);
-      }
+      console.log("Venta guardada:", response.data);
+      form.reset(); // Limpiar el formulario
     } catch (error) {
       console.error("Error en la solicitud:", error);
     }

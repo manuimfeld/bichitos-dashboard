@@ -21,7 +21,7 @@ export default function Sales() {
     const fetchSales = async () => {
       try {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API}/sales/today`,
+          `http://localhost:3001/api/sales/today`,
           {
             headers: {
               authorization: `${getToken()}`,

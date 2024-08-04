@@ -21,16 +21,13 @@ export default function Login() {
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API}/auth/login`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
+      const response = await fetch(`http://localhost:3001/api/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
       if (response.ok) {
         const result = await response.json();
