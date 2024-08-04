@@ -18,22 +18,25 @@ export default function Sales() {
   }
 
   useEffect(() => {
-    const fetchSales = async () => {
-      try {
-        const response = await axios.get(`${process.env.API_URL}/sales/today`, {
+    const fetchSales = () => {
+      axios
+        .get(`${process.env.NEXT_PUBLIC_API_URL}/sales/today`, {
           headers: {
             authorization: `${getToken()}`,
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*",
           },
-        }); // Esto llama a la API Route que hemos creado
-        setSales(response.data);
-      } catch (error) {
-        setError("Error fetching sales");
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
+        })
+        .then(function (response) {
+          setSales(response.data);
+        })
+        .catch(function (error) {
+          setError("Error fetching sales");
+          console.error(error);
+        })
+        .finally(function () {
+          setLoading(false);
+        });
     };
 
     fetchSales();
@@ -60,9 +63,13 @@ export default function Sales() {
         </Link>
       </div>
     );
-  <div className="text-black text-xs bg-white col-span-2 row-start-2 p-4 overflow-y-auto w-[calc(100%_-_32px)] mx-auto mt-4 lg:mx-0 lg:w-full">
-    <p className="mx-auto w-fit">{error}</p>
-  </div>;
+  if (error) {
+    return (
+      <div className="text-black text-xs bg-white col-span-2 row-start-2 p-4 overflow-y-auto w-[calc(100%_-_32px)] mx-auto mt-4 lg:mx-0 lg:w-full">
+        <p className="mx-auto w-fit">{error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="text-black text-xs bg-white col-span-2 row-start-2 p-4 overflow-y-auto w-[calc(100%_-_32px)] mx-auto mt-4 lg:mx-0 lg:w-full">

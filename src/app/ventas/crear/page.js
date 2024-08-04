@@ -20,7 +20,7 @@ export default function Home() {
     Tarde: "2",
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const form = e.target;
@@ -33,24 +33,21 @@ export default function Home() {
         paymentMethodMapping[form.elements.payment_method.value],
     };
 
-    try {
-      const response = await axios.post(
-        `${process.env.API_URL}/sales`,
-        saleData,
-        {
-          headers: {
-            authorization: `${getToken()}`,
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-        }
-      );
-
-      console.log("Venta guardada:", response.data);
-      form.reset(); // Limpiar el formulario
-    } catch (error) {
-      console.error("Error en la solicitud:", error);
-    }
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API_URL}/sales`, saleData, {
+        headers: {
+          authorization: `${getToken()}`,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+      .then(function (response) {
+        console.log("Venta guardada:", response.data);
+        form.reset(); // Limpiar el formulario
+      })
+      .catch(function (error) {
+        console.error("Error en la solicitud:", error);
+      });
   };
 
   return (

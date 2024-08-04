@@ -19,29 +19,28 @@ export default function Login() {
     setShowPassword(!showPassword);
   };
 
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
     console.log(data);
-    try {
-      const response = await axios.post(
-        `${process.env.API_URL}/auth/login`,
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then(function (response) {
+        // Verifica el estado de la respuesta
+        if (response.status === 200) {
+          const result = response.data; // Obtén los datos de la respuesta
+          const token = result.jwt;
+          localStorage.setItem("authorization", token);
+          router.push("/");
+        } else {
+          console.error("Error en la solicitud:", response.statusText);
         }
-      );
-
-      if (response.ok) {
-        const result = await response.json();
-        const token = `${result.jwt}`;
-        localStorage.setItem("authorization", token);
-        router.push("/");
-      }
-    } catch (err) {
-      console.error("Error en la solicitud:", err);
-    }
+      })
+      .catch(function (error) {
+        console.error("Error en la solicitud:", error);
+      });
   };
 
   return (
@@ -67,7 +66,7 @@ export default function Login() {
               id="username"
               name="username"
               type="text"
-              className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
+              className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600"
               placeholder="Nombre de usuario"
             />
             <label
@@ -85,8 +84,8 @@ export default function Login() {
               autoComplete="off"
               id="password"
               name="password"
-              type={`${showPassword === false ? "password" : "text"}`}
-              className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
+              type={`${showPassword ? "text" : "password"}`}
+              className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600"
             />
             <label
               htmlFor="password"
@@ -97,12 +96,9 @@ export default function Login() {
             {errors.password && <span>Por favor, escriba la contraseña</span>}
             <span
               onClick={handleClick}
-              className="text-sm mt-2 inline-block
-          "
+              className="text-sm mt-2 inline-block cursor-pointer"
             >
-              {showPassword === false
-                ? "Mostrar contraseña"
-                : "Ocultar contraseña"}
+              {showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
             </span>
           </div>
           <div className="relative">
