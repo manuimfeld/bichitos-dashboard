@@ -12,7 +12,7 @@ export default function Sales() {
   const [error, setError] = useState(null);
 
   function getToken() {
-    let token = localStorage.getItem("Authorization");
+    let token = localStorage.getItem("authorization");
     return token;
   }
 
