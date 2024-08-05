@@ -60,53 +60,58 @@ export default function Home() {
   return (
     <main className="text-black text-xs bg-white col-span-2 row-start-2 p-4 overflow-y-auto w-[calc(100%_-_32px)] mx-auto mt-4 lg:mx-0 lg:w-full">
       <form onSubmit={handleSubmit} className="bg-white p-4">
-        <p className="mb-2">Método de pago</p>
-        <div className="flex-col md:flex-row md:flex-wrap mb-2 gap-2">
+        <p className="mb-2 text-lg md:text-xs">Método de pago</p>
+        <div className="flex flex-wrap justify-between md:justify-normal mb-2 gap-2">
           {["Efectivo", "Transferencia", "Débito", "Crédito"].map((method) => (
-            <div key={method}>
+            <div key={method} className="w-fit">
               <input
                 type="radio"
                 id={method}
                 name="payment_method"
                 value={method}
-                className="mr-2"
+                className="hidden peer"
               />
-              <label htmlFor={method} className="mr-2 text-xs">
+              <label
+                htmlFor={method}
+                className="flex items-center justify-center w-32 h-12 md:w-24 md:h-8 text-lg md:text-xs border-2 border-gray-300 rounded-md cursor-pointer text-center peer-checked:border-cyan-500 peer-checked:text-black peer-checked:border-transparent transition-all duration-300"
+              >
                 {method}
               </label>
             </div>
           ))}
         </div>
-        <p className="mt-3 mb-1">Monto</p>
+        <p className="mt-3 mb-1 text-lg md:text-xs">Monto</p>
         <input
           type="number"
           id="amount"
           name="amount"
-          className="border-[#8D8D8D] border-[1.5px] rounded-custom outline-0 bg-transparent px-2 py-2 w-1/2"
+          className="border-[#8D8D8D] border-[1.5px] rounded-md text-lg md:text-sm outline-0 bg-transparent px-2 py-2 w-full md:w-1/4 h-12 md:h-8"
           placeholder="$"
         />
 
-        <p className="mb-1 mt-3">Turno</p>
-        <div className="flex items-center mb-2">
+        <p className="mb-1 mt-3 text-lg md:text-xs">Turno</p>
+        <div className="flex flex-wrap justify-between md:justify-normal mb-2 gap-2">
           {["Mañana", "Tarde"].map((turn) => (
-            <>
+            <div key={turn} className="w-fit">
               <input
-                key={turn}
                 type="radio"
                 id={turn}
                 name="turn"
                 value={turn}
-                className="mr-2"
+                className="hidden peer"
               />
-              <label htmlFor={turn} className="ml-1 mr-4 text-xs">
+              <label
+                htmlFor={turn}
+                className="flex items-center justify-center w-32 h-12 md:w-24 md:h-8 text-lg md:text-xs border-2 border-gray-300 rounded-md cursor-pointer text-center peer-checked:border-cyan-500 peer-checked:text-black peer-checked:border-transparent transition-all duration-300"
+              >
                 {turn}
               </label>
-            </>
+            </div>
           ))}
         </div>
         <button
           type="submit"
-          className="mt-3 block uppercase text-white bg-[#00ADD2] rounded-custom w-1/2 py-[5px]"
+          className="mt-3 block uppercase text-white bg-[#00ADD2] md:text-xs text-lg h-12 md:h-fit rounded-md md:w-1/2 w-full py-[5px]"
         >
           Guardar Venta
         </button>
