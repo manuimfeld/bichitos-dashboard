@@ -1,8 +1,10 @@
 "use client";
 
+import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
 
 export default function Home() {
+  const { toast } = useToast();
   function getToken() {
     let token = localStorage.getItem("authorization");
     return token;
@@ -44,6 +46,11 @@ export default function Home() {
       .then(function (response) {
         console.log("Venta guardada:", response.data);
         form.reset(); // Limpiar el formulario
+        toast({
+          variant: "success",
+          title: "Venta guardada",
+          description: "La venta fue guardada correctamente",
+        });
       })
       .catch(function (error) {
         console.error("Error en la solicitud:", error);

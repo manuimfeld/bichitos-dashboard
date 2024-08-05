@@ -2,6 +2,7 @@ import { Roboto } from "next/font/google";
 import "../globals.css";
 import Header from "../components/header";
 import AsideMenu from "../components/asideMenu";
+import { Toaster } from "@/components/ui/toaster";
 
 const roboto = Roboto({
   weight: ["100", "300", "400", "500", "700", "900"],
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
         <Header />
         <AsideMenu />
         {children}
+        <Toaster />
       </body>
     </html>
   );

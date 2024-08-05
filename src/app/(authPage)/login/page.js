@@ -4,8 +4,11 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function Login() {
+  const { toast } = useToast();
+
   const {
     register,
     handleSubmit,
@@ -32,14 +35,27 @@ export default function Login() {
         if (response.status === 200) {
           const result = response.data; // Obtén los datos de la respuesta
           const token = result.jwt;
+          toast({
+            variant: "success",
+            title: "Iniciaste sesión",
+            description: "Has iniciado sesión correctamente",
+          });
           localStorage.setItem("authorization", token);
-          router.push("/");
+          setTimeout(() => {
+            router.push("/");
+          }, 1500);
         } else {
           console.error("Error en la solicitud:", response.statusText);
         }
       })
       .catch(function (error) {
         console.error("Error en la solicitud:", error);
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description:
+            "Ha ocurrido un error, verifica el nombre de usuario y contraseña",
+        });
       });
   };
 
