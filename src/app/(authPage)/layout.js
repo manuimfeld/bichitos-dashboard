@@ -15,7 +15,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="es" className={roboto.className}>
-      <body className="flex justify-center items-center h-screen w-screen bg-[#FBF7F3]">
+      <body className="flex justify-center items-center h-screen max-w-screen bg-[#FBF7F3]">
         {children}
         <Toaster />
       </body>
