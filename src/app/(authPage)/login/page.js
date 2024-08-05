@@ -101,13 +101,12 @@ export default function Login() {
               {showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
             </span>
           </div>
-          <div className="relative">
-            <input
-              type="submit"
-              value="Iniciar sesión"
-              className="bg-cyan-500 text-white rounded-md px-2 py-1 w-full"
-            />
-          </div>
+
+          <input
+            type="submit"
+            value="Iniciar sesión"
+            className="hover:cursor-pointer hover:bg-cyan-400 focus:bg-cyan-700 transition-all duration-500 bg-cyan-500 text-white rounded-md px-2 py-1 w-full"
+          />
         </div>
       </form>
     </div>
