@@ -2,13 +2,19 @@
 
 import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
+import { useState } from "react";
 
 export default function Home() {
+  const date = new Date();
+  const hours = date.getHours();
   const { toast } = useToast();
   function getToken() {
     let token = localStorage.getItem("authorization");
     return token;
   }
+  const [actualTurn, setActualTurn] = useState(
+    hours <= 16 ? "Mañana" : "Tarde"
+  );
 
   const paymentMethodMapping = {
     Efectivo: 1,
@@ -26,6 +32,7 @@ export default function Home() {
     e.preventDefault();
 
     const form = e.target;
+
     const saleData = {
       amount: form.elements.amount.value,
       customer_dni: null, // Ajusta esto según tus necesidades
@@ -73,7 +80,7 @@ export default function Home() {
               />
               <label
                 htmlFor={method}
-                className="flex items-center justify-center w-32 h-12 md:w-24 md:h-8 text-lg md:text-xs border-2 border-gray-300 rounded-md cursor-pointer text-center peer-checked:border-cyan-500 peer-checked:text-black peer-checked:border-transparent transition-all duration-300"
+                className="flex items-center justify-center w-32 h-12 md:w-24 md:h-8 text-lg md:text-xs border-2 border-gray-300 rounded-md cursor-pointer text-center peer-checked:border-cyan-500 peer-checked:text-black transition-all duration-300"
               >
                 {method}
               </label>
@@ -91,7 +98,7 @@ export default function Home() {
 
         <p className="mb-1 mt-3 text-lg md:text-xs">Turno</p>
         <div className="flex flex-wrap justify-between md:justify-normal mb-2 gap-2">
-          {["Mañana", "Tarde"].map((turn) => (
+          {["Mañana", "Tarde"].map((turn, index) => (
             <div key={turn} className="w-fit">
               <input
                 type="radio"
@@ -99,10 +106,11 @@ export default function Home() {
                 name="turn"
                 value={turn}
                 className="hidden peer"
+                checked={actualTurn === turn ? true : false}
               />
               <label
                 htmlFor={turn}
-                className="flex items-center justify-center w-32 h-12 md:w-24 md:h-8 text-lg md:text-xs border-2 border-gray-300 rounded-md cursor-pointer text-center peer-checked:border-cyan-500 peer-checked:text-black peer-checked:border-transparent transition-all duration-300"
+                className="flex items-center justify-center w-32 h-12 md:w-24 md:h-8 text-lg md:text-xs border-2 border-gray-300 rounded-md cursor-pointer text-center peer-checked:border-cyan-500 peer-checked:text-black transition-all duration-300"
               >
                 {turn}
               </label>
