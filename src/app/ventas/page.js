@@ -6,6 +6,7 @@ import { columns } from "./columns";
 import { DataTable } from "./data-table";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
+import { ChartPie } from "../components/chart";
 
 export default function Sales() {
   const [sales, setSales] = useState([]);
@@ -74,11 +75,7 @@ export default function Sales() {
   return (
     <div className="text-black text-xs bg-white col-span-2 row-start-2 p-4 overflow-y-auto w-[calc(100%_-_32px)] mx-auto mt-4 lg:mx-0 lg:w-full">
       <h2 className="text-2xl">Historial de ventas</h2>
-      <p className="mt-4">Ventas en total: {sales.length}</p>
-      <p className="mb-2">
-        Monto total: <span className="text-amount">${reduceAmount(sales)}</span>
-      </p>
-
+      <ChartPie data={sales} totalAmount={reduceAmount(sales)} />
       <DataTable columns={columns} data={sales} />
     </div>
   );
