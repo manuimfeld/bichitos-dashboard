@@ -75,7 +75,6 @@ export default function Sales() {
   return (
     <div className="text-black text-xs bg-white col-span-2 row-start-2 p-4 overflow-y-auto w-[calc(100%_-_32px)] mx-auto mt-4 lg:mx-0 lg:w-full">
       <h2 className="text-2xl">Historial de ventas</h2>
-
       <ChartPie data={sales} totalAmount={reduceAmount(sales)} />
       <DataTable columns={columns} data={sales} />
     </div>

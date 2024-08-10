@@ -60,12 +60,16 @@ export const columns = [
 
       if (data.status === "Pago") {
         return (
-          <p className="text-green-500 bg-green-200 p-1 rounded-full">✅Pago</p>
+          <p className="text-green-500 bg-green-200 p-1 rounded-full text-center">
+            Pago
+          </p>
         );
       }
       {
         return (
-          <p className="text-red-500 bg-red-200 p-1 rounded-full">❌Impago</p>
+          <p className="text-yellow-500 border-yellow-500 border-2 p-1 rounded-full text-center">
+            Pendiente
+          </p>
         );
       }
     },
