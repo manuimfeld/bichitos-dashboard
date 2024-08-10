@@ -169,7 +169,7 @@ export default function Header() {
                   >
                     <path d="M12 20v-6M6 20V10M18 20V4" />
                   </svg>
-                  <Link href="/ventas">Ver gastos</Link>
+                  <Link href="/gastos">Ver gastos</Link>
                 </li>
                 <li className=" mt-1 ml-6 hover:bg-[#EDEDED] w-fit px-2 flex items-center">
                   <svg
