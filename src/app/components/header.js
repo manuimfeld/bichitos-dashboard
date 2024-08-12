@@ -28,7 +28,7 @@ export default function Header() {
         {SHEET_SIDES.map((side) => (
           <Sheet key={side}>
             <SheetTrigger asChild>
-              <Button variant="default">
+              <Button variant="white">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="14"
