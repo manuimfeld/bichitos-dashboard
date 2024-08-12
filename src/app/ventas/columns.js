@@ -75,7 +75,7 @@ export const columns = [
               </DropdownMenuContent>
             </DropdownMenu>
             <EditDialogContent sale={sale} />
-            <DeleteAlertDialogContent sale={sale} />
+            <DeleteAlertDialogContent sale_id={sale.sale_id} />
           </AlertDialog>
         </Dialog>
       );

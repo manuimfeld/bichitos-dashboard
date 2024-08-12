@@ -1,20 +1,43 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { useToast } from "@/components/ui/use-toast";
+import { cn } from "@/lib/utils";
 import axios from "axios";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 export default function Home() {
-  const date = new Date();
-  const hours = date.getHours();
   const { toast } = useToast();
+  const [date, setDate] = useState(new Date());
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    reset,
+  } = useForm({
+    defaultValues: {
+      amount: "",
+      payment_method: "",
+      turn: "",
+      date: new Date(),
+    },
+  });
+
   function getToken() {
     let token = localStorage.getItem("authorization");
     return token;
   }
-  const [actualTurn, setActualTurn] = useState(
-    hours <= 16 ? "Mañana" : "Tarde"
-  );
 
   const paymentMethodMapping = {
     Efectivo: 1,
@@ -28,20 +51,15 @@ export default function Home() {
     Tarde: "2",
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const form = e.target;
-
+  const onSubmit = (data) => {
     const saleData = {
-      amount: form.elements.amount.value,
+      payment_method_id: paymentMethodMapping[data.payment_method],
+      amount: data.amount,
       customer_dni: null, // Ajusta esto según tus necesidades
-      turn: turnMapping[form.elements.turn.value], // 'Mañana' o 'Tarde'
+      sale_date: data.date,
       created_by: 1, // Ajusta esto según tus necesidades
-      payment_method_id:
-        paymentMethodMapping[form.elements.payment_method.value],
+      turn: turnMapping[data.turn], // 'Mañana' o 'Tarde'
     };
-
     axios
       .post(`${process.env.NEXT_PUBLIC_API_URL}/sales`, saleData, {
         headers: {
@@ -52,7 +70,7 @@ export default function Home() {
       })
       .then(function (response) {
         console.log("Venta guardada:", response.data);
-        form.reset(); // Limpiar el formulario
+        reset(); // Limpiar el formulario
         toast({
           variant: "success",
           title: "Venta guardada",
@@ -66,15 +84,52 @@ export default function Home() {
 
   return (
     <main className="text-black text-xs bg-white col-span-2 row-start-2 p-4 overflow-y-auto w-[calc(100%_-_32px)] mx-auto mt-4 lg:mx-0 lg:w-full">
-      <form onSubmit={handleSubmit} className="bg-white p-4">
-        <p className="mb-2 text-lg md:text-xs">Método de pago</p>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="bg-white p-4 space-y-4"
+      >
+        <div className="flex flex-col">
+          <p className="mb-2 text-lg md:text-xs">Fecha</p>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant={"outline"}
+                className={cn(
+                  "w-[240px] pl-3 text-left font-normal",
+                  !date && "text-muted-foreground"
+                )}
+              >
+                {date ? format(date, "PPP") : <span>Pick a date</span>}
+                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar
+                mode="single"
+                selected={date}
+                onSelect={(date) => {
+                  setDate(date);
+                  setValue("date", date); // Update react-hook-form with the selected date
+                }}
+                disabled={(date) =>
+                  date > new Date() || date < new Date("1900-01-01")
+                }
+                initialFocus
+              />
+            </PopoverContent>
+          </Popover>
+          {errors.date && <p className="text-red-500">{errors.date.message}</p>}
+        </div>
+
         <div className="flex flex-wrap justify-between md:justify-normal mb-2 gap-2">
           {["Efectivo", "Transferencia", "Débito", "Crédito"].map((method) => (
             <div key={method} className="w-fit">
               <input
                 type="radio"
                 id={method}
-                name="payment_method"
+                {...register("payment_method", {
+                  required: "Método de pago es requerido",
+                })}
                 value={method}
                 className="hidden peer"
               />
@@ -86,27 +141,36 @@ export default function Home() {
               </label>
             </div>
           ))}
+          {errors.payment_method && (
+            <p className="text-red-500">{errors.payment_method.message}</p>
+          )}
         </div>
+
         <p className="mt-3 mb-1 text-lg md:text-xs">Monto</p>
         <input
           type="number"
           id="amount"
-          name="amount"
+          {...register("amount", {
+            required: "Monto es requerido",
+            valueAsNumber: true,
+          })}
           className="border-[#8D8D8D] border-[1.5px] rounded-md text-lg md:text-sm outline-0 bg-transparent px-2 py-2 w-full md:w-1/4 h-12 md:h-8"
           placeholder="$"
         />
+        {errors.amount && (
+          <p className="text-red-500">{errors.amount.message}</p>
+        )}
 
         <p className="mb-1 mt-3 text-lg md:text-xs">Turno</p>
         <div className="flex flex-wrap justify-between md:justify-normal mb-2 gap-2">
-          {["Mañana", "Tarde"].map((turn, index) => (
+          {["Mañana", "Tarde"].map((turn) => (
             <div key={turn} className="w-fit">
               <input
                 type="radio"
                 id={turn}
-                name="turn"
+                {...register("turn", { required: "Turno es requerido" })}
                 value={turn}
                 className="hidden peer"
-                checked={actualTurn === turn ? true : false}
               />
               <label
                 htmlFor={turn}
@@ -116,7 +180,9 @@ export default function Home() {
               </label>
             </div>
           ))}
+          {errors.turn && <p className="text-red-500">{errors.turn.message}</p>}
         </div>
+
         <button
           type="submit"
           className="mt-3 block uppercase text-white bg-[#00ADD2] md:text-xs text-lg h-12 md:h-fit rounded-md md:w-1/2 w-full py-[5px]"

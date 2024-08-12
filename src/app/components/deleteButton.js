@@ -8,8 +8,28 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
+import { deleteSale } from "../services/api";
 
-export const DeleteAlertDialogContent = ({ sale }) => {
+export const DeleteAlertDialogContent = ({ sale_id }) => {
+  const { toast } = useToast();
+
+  const handleDelete = async () => {
+    try {
+      await deleteSale(sale_id);
+      toast({
+        variant: "success",
+        title: "Venta eliminada",
+        description: `La venta con ID: ${sale_id} fue eliminada correctamente.`,
+      });
+    } catch (error) {
+      toast({
+        variant: "success",
+        title: "Error",
+        description: "Hubo un problema al eliminar la venta." + error,
+      });
+    }
+  };
   return (
     <AlertDialogContent>
       <AlertDialogHeader>
@@ -23,14 +43,7 @@ export const DeleteAlertDialogContent = ({ sale }) => {
       <AlertDialogFooter>
         <AlertDialogCancel>Cancelar</AlertDialogCancel>
         <AlertDialogAction>
-          <Button
-            variant="destructive"
-            onClick={() =>
-              alert(
-                "La venta ID: " + sale.sale_id + " fue eliminada correctamente"
-              )
-            }
-          >
+          <Button variant="destructive" onClick={handleDelete}>
             Eliminar
           </Button>
         </AlertDialogAction>
