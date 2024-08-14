@@ -37,6 +37,7 @@ import {
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
   amount: z
@@ -52,7 +53,7 @@ const formSchema = z.object({
     message: "Turno debe ser 'mañana' o 'tarde'",
   }), // Asegura que solo puede ser 'mañana' o 'tarde'
 
-  date: z.date(),
+  sale_date: z.date(),
 });
 
 const methodMapping = {
@@ -67,15 +68,7 @@ const turnMapping = {
 };
 
 export const EditDialogContent = ({ sale }) => {
-  const saleAdapted = {
-    amount: sale.amount,
-    payment_method_id: methodMapping[sale.payment_method_id],
-    turn: turnMapping[sale.turn],
-    date: sale.sale_date ? new Date(sale.sale_date) : new Date(),
-  };
-
   const { toast } = useToast();
-  const [date, setDate] = useState(new Date(sale.sale_date));
 
   function getToken() {
     let token = localStorage.getItem("authorization");
@@ -85,22 +78,24 @@ export const EditDialogContent = ({ sale }) => {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      amount: saleAdapted.amount,
-      payment_method_id: saleAdapted.payment_method_id,
-      turn: saleAdapted.turn,
-      date: saleAdapted.sale_date ? new Date(sale.sale_date) : new Date(),
+      amount: sale.amount,
+      payment_method_id: Object.keys(methodMapping).find(
+        (key) => methodMapping[key] === sale.payment_method_id
+      ),
+      turn: Object.keys(turnMapping).find(
+        (key) => turnMapping[key] === sale.turn
+      ),
+      sale_date: sale.sale_date ? new Date(sale.sale_date) : new Date(),
     },
   });
 
   const onSubmit = (data) => {
-    console.log("Viejo", data);
     const updatedSaleData = {
       payment_method_id: data.payment_method_id,
       amount: data.amount,
       turn: data.turn,
-      sale_date: data.date,
+      sale_date: data.sale_date,
     };
-    console.log(updatedSaleData, "Nuevo");
 
     axios
       .put(
@@ -138,45 +133,43 @@ export const EditDialogContent = ({ sale }) => {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
               control={form.control}
-              name="date"
+              name="sale_date"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Fecha</FormLabel>
-                  <FormControl>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <button
-                          type="button"
-                          className="w-[240px] pl-3 text-left font-normal border rounded-md p-2"
+                <FormItem className="flex flex-col">
+                  <FormLabel>Fecha de la venta</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant={"outline"}
+                          className={cn(
+                            "w-[240px] pl-3 text-left font-normal",
+                            !field.value && "text-muted-foreground"
+                          )}
                         >
-                          {date ? (
-                            format(date, "PPP")
+                          {field.value ? (
+                            format(field.value, "PPP")
                           ) : (
-                            <span>Seleccionar fecha</span>
+                            <span>Pick a date</span>
                           )}
                           <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                        </button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={date}
-                          onSelect={(selectedDate) => {
-                            if (selectedDate) {
-                              setDate(selectedDate);
-                              field.onChange(selectedDate);
-                            }
-                          }}
-                          disabled={(date) =>
-                            date > new Date() || date < new Date("1900-01-01")
-                          }
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </FormControl>
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        disabled={(date) =>
+                          date > new Date() || date < new Date("2024-01-01")
+                        }
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
                   <FormDescription>
-                    Seleccione la fecha de la venta.
+                    Your date of birth is used to calculate your age.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -243,13 +236,16 @@ export const EditDialogContent = ({ sale }) => {
                 <FormItem>
                   <FormLabel>Turno</FormLabel>
                   <FormControl>
-                    <Select {...field} value={field.value || ""}>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
                       <SelectTrigger className="w-[180px]">
                         <SelectValue placeholder="Turno" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="mañana">Mañana</SelectItem>
-                        <SelectItem value="tarde">Tarde</SelectItem>
+                        <SelectItem value="Mañana">Mañana</SelectItem>
+                        <SelectItem value="Tarde">Tarde</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
