@@ -30,6 +30,7 @@ export default function Sales({ params }) {
         })
         .then(function (response) {
           setSales(response.data);
+          console.log(response.data);
         })
         .catch(function (error) {
           setError("Error fetching sales");

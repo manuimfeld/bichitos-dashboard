@@ -25,8 +25,55 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useToast } from "@/components/ui/use-toast";
 import { format } from "date-fns";
+import { z } from "zod";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button";
+
+const formSchema = z.object({
+  amount: z
+    .string()
+    .regex(/^\d+$/, { message: "Monto debe ser un número válido sin letras" }) // Asegura que solo contiene dígitos
+    .min(1, { message: "Monto es requerido" }) // Asegura que el monto no esté vacío
+    .max(10, { message: "Monto debe tener un máximo de 10 caracteres" }), // Asegura un máximo de caracteres
+
+  payment_method_id: z
+    .string()
+    .min(1, { message: "Método de pago es requerido" }), // Asegura que el campo no esté vacío
+  turn: z.enum(["Mañana", "Tarde"], {
+    message: "Turno debe ser 'mañana' o 'tarde'",
+  }), // Asegura que solo puede ser 'mañana' o 'tarde'
+
+  date: z.date(),
+});
+
+const methodMapping = {
+  1: "Efectivo",
+  2: "Transferencia",
+  3: "Débito",
+  4: "Crédito",
+};
+const turnMapping = {
+  1: "Mañana",
+  2: "Tarde",
+};
 
 export const EditDialogContent = ({ sale }) => {
+  const saleAdapted = {
+    amount: sale.amount,
+    payment_method_id: methodMapping[sale.payment_method_id],
+    turn: turnMapping[sale.turn],
+    date: sale.sale_date ? new Date(sale.sale_date) : new Date(),
+  };
+
   const { toast } = useToast();
   const [date, setDate] = useState(new Date(sale.sale_date));
 
@@ -35,43 +82,25 @@ export const EditDialogContent = ({ sale }) => {
     return token;
   }
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm({
+  const form = useForm({
+    resolver: zodResolver(formSchema),
     defaultValues: {
-      amount: sale.amount,
-      payment_method: sale.payment_method_id,
-      turn: sale.turn,
-      date: sale.sale_date ? new Date(sale.sale_date) : new Date(), // Pre-carga la fecha
+      amount: saleAdapted.amount,
+      payment_method_id: saleAdapted.payment_method_id,
+      turn: saleAdapted.turn,
+      date: saleAdapted.sale_date ? new Date(sale.sale_date) : new Date(),
     },
   });
 
-  useEffect(() => {
-    setValue("date", date);
-  }, [date, setValue]);
-
-  const paymentMethodMapping = {
-    1: "Efectivo",
-    2: "Transferencia",
-    3: "Débito",
-    4: "Crédito",
-  };
-
-  const turnMapping = {
-    1: "Mañana",
-    2: "Tarde",
-  };
-
   const onSubmit = (data) => {
+    console.log("Viejo", data);
     const updatedSaleData = {
       payment_method_id: data.payment_method_id,
       amount: data.amount,
       turn: data.turn,
       sale_date: data.date,
     };
+    console.log(updatedSaleData, "Nuevo");
 
     axios
       .put(
@@ -105,106 +134,141 @@ export const EditDialogContent = ({ sale }) => {
         <DialogDescription>Cambie los valores de la venta</DialogDescription>
       </DialogHeader>
       <div className="grid gap-4 py-4 text-black">
-        <form onSubmit={handleSubmit(onSubmit)} className="h-fit flex-col">
-          <div className="flex flex-col">
-            <p className="mb-2 text-lg md:text-xs">Fecha</p>
-            <Popover>
-              <PopoverTrigger asChild>
-                <button
-                  type="button"
-                  className="w-[240px] pl-3 text-left font-normal border rounded-md p-2"
-                >
-                  {date ? format(date, "PPP") : <span>Seleccionar fecha</span>}
-                  <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                </button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="start">
-                <Calendar
-                  mode="single"
-                  selected={date}
-                  onSelect={(selectedDate) => {
-                    if (selectedDate) {
-                      setDate(selectedDate);
-                      setValue("date", selectedDate); // Actualiza react-hook-form con la fecha seleccionada
-                    }
-                  }}
-                  disabled={(date) =>
-                    date > new Date() || date < new Date("1900-01-01")
-                  }
-                  initialFocus
-                />
-              </PopoverContent>
-            </Popover>
-            {errors.date && (
-              <p className="text-red-500">{errors.date.message}</p>
-            )}
-          </div>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <FormField
+              control={form.control}
+              name="date"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Fecha</FormLabel>
+                  <FormControl>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <button
+                          type="button"
+                          className="w-[240px] pl-3 text-left font-normal border rounded-md p-2"
+                        >
+                          {date ? (
+                            format(date, "PPP")
+                          ) : (
+                            <span>Seleccionar fecha</span>
+                          )}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={date}
+                          onSelect={(selectedDate) => {
+                            if (selectedDate) {
+                              setDate(selectedDate);
+                              field.onChange(selectedDate);
+                            }
+                          }}
+                          disabled={(date) =>
+                            date > new Date() || date < new Date("1900-01-01")
+                          }
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </FormControl>
+                  <FormDescription>
+                    Seleccione la fecha de la venta.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Select
-              {...register("payment_method", {
-                required: "Método de pago es requerido",
-              })}
-              defaultValue={paymentMethodMapping[sale.payment_method_id]}
+            <FormField
+              control={form.control}
+              name="payment_method_id"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Método de pago</FormLabel>
+                  <FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <SelectTrigger className="w-[180px]">
+                        <SelectValue placeholder="Pago" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Efectivo">Efectivo</SelectItem>
+                        <SelectItem value="Transferencia">
+                          Transferencia
+                        </SelectItem>
+                        <SelectItem value="Débito">Débito</SelectItem>
+                        <SelectItem value="Crédito">Crédito</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormDescription>
+                    Seleccione el método de pago.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="amount"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Monto</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      {...field}
+                      placeholder="Ingrese el monto"
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Ingrese el monto de la venta.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="turn"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Turno</FormLabel>
+                  <FormControl>
+                    <Select {...field} value={field.value || ""}>
+                      <SelectTrigger className="w-[180px]">
+                        <SelectValue placeholder="Turno" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="mañana">Mañana</SelectItem>
+                        <SelectItem value="tarde">Tarde</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormDescription>
+                    Seleccione el turno de la venta.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <Button
+              type="submit"
+              className="mt-3 block uppercase text-white bg-[#00ADD2] md:text-xs text-lg h-12 md:h-fit rounded-md md:w-1/2 w-full py-[5px]"
             >
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Pago" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="1">Efectivo</SelectItem>
-                <SelectItem value="2">Transferencia</SelectItem>
-                <SelectItem value="3">Débito</SelectItem>
-                <SelectItem value="4">Crédito</SelectItem>
-              </SelectContent>
-            </Select>
-            {errors.payment_method && (
-              <p className="text-red-500">{errors.payment_method.message}</p>
-            )}
-          </div>
-
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="amount">
-              Monto
-              <Input
-                id="amount"
-                type="number"
-                {...register("amount", {
-                  required: "Monto es requerido",
-                  valueAsNumber: true,
-                })}
-                defaultValue={sale.amount}
-              />
-            </Label>
-            {errors.amount && (
-              <p className="text-red-500">{errors.amount.message}</p>
-            )}
-          </div>
-
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Select
-              {...register("turn", { required: "Turno es requerido" })}
-              defaultValue={sale.turn}
-            >
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Turno" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="1">Mañana</SelectItem>
-                <SelectItem value="2">Tarde</SelectItem>
-              </SelectContent>
-            </Select>
-            {errors.turn && (
-              <p className="text-red-500">{errors.turn.message}</p>
-            )}
-          </div>
-
-          <button
-            type="submit"
-            className="mt-3 block uppercase text-white bg-[#00ADD2] md:text-xs text-lg h-12 md:h-fit rounded-md md:w-1/2 w-full py-[5px]"
-          >
-            Guardar
-          </button>
-        </form>
+              Guardar
+            </Button>
+          </form>
+        </Form>
       </div>
     </DialogContent>
   );
