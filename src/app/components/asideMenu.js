@@ -101,6 +101,63 @@ export default function AsideMenu() {
             strokeLinejoin="round"
             className="mr-1"
           >
+            <circle cx="10" cy="20.5" r="1" />
+            <circle cx="18" cy="20.5" r="1" />
+            <path d="M2.5 2.5h3l2.7 12.4a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.6l1.6-8.4H7.1" />
+          </svg>
+          Productos
+        </li>
+        <li className="text-[10px] mt-1 ml-6 hover:bg-[#EDEDED] w-fit px-2 flex items-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#000000"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M12 20v-6M6 20V10M18 20V4" />
+          </svg>
+          <Link href="/productos" className="ml-1">
+            Ver productos
+          </Link>
+        </li>
+        <li className="text-[10px] mt-1 ml-6 hover:bg-[#EDEDED] w-fit px-2 flex items-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#000000"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <Link href="/productos/crear" className="ml-1">
+            Crear productos
+          </Link>
+        </li>
+
+        <li className="font-normal mt-2 hover:bg-[#EDEDED] w-full px-2 flex items-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#000000"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="mr-1"
+          >
             <rect x="2" y="4" width="20" height="16" rx="2" />
             <path d="M7 15h0M2 9.5h20" />
           </svg>
