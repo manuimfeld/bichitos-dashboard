@@ -33,32 +33,41 @@ import { Input } from "@/components/ui/input";
 
 export const columns = [
   {
-    accessorKey: "date",
+    accessorKey: "expenses_date",
     header: "Fecha",
-  },
-  {
-    accessorKey: "category",
-    header: "Categoría",
+    cell: ({ row }) => {
+      const data = row.original;
+      let date = data.expenses_date.split("T")[0];
+      return <p>{date}</p>;
+    },
   },
   {
     accessorKey: "provider",
     header: "Proveedor",
   },
   {
+    accessorKey: "expenses_type",
+    header: "Detalles",
+  },
+  {
     accessorKey: "amount",
     header: "Monto",
+    cell: ({ row }) => {
+      const data = row.original;
+      const amount = new Intl.NumberFormat("es-AR", {
+        style: "currency",
+        currency: "ARS",
+      }).format(data.amount);
+      return <p>{amount}</p>;
+    },
   },
   {
-    accessorKey: "payment_type",
-    header: "Método de pago",
-  },
-  {
-    accessorKey: "status",
+    accessorKey: "is_paid",
     header: "Estado",
     cell: ({ row }) => {
       const data = row.original;
 
-      if (data.status === "Pago") {
+      if (data.is_paid) {
         return (
           <p className="text-green-500 bg-green-200 p-1 rounded-full text-center">
             Pago
@@ -74,6 +83,7 @@ export const columns = [
       }
     },
   },
+
   {
     id: "actions",
     cell: ({ row }) => {
