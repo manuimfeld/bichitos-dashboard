@@ -83,113 +83,124 @@ export default function Home() {
   };
 
   return (
-    <main className="text-black text-xs bg-white col-span-2 row-start-2 p-4 overflow-y-auto w-[calc(100%_-_32px)] mx-auto mt-4 lg:mx-0 lg:w-full">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="bg-white p-4 space-y-4"
-      >
-        <div className="flex flex-col">
-          <p className="mb-2 text-lg md:text-xs">Fecha</p>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant={"outline"}
-                className={cn(
-                  "w-[240px] pl-3 text-left font-normal",
-                  !date && "text-muted-foreground"
-                )}
-              >
-                {date ? format(date, "PPP") : <span>Pick a date</span>}
-                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
-              <Calendar
-                mode="single"
-                selected={date}
-                onSelect={(date) => {
-                  setDate(date);
-                  setValue("date", date); // Update react-hook-form with the selected date
-                }}
-                disabled={(date) =>
-                  date > new Date() || date < new Date("1900-01-01")
-                }
-                initialFocus
-              />
-            </PopoverContent>
-          </Popover>
-          {errors.date && <p className="text-red-500">{errors.date.message}</p>}
-        </div>
-
-        <div className="flex flex-wrap justify-between md:justify-normal mb-2 gap-2">
-          {["Efectivo", "Transferencia", "Débito", "Crédito"].map((method) => (
-            <div key={method} className="w-fit">
-              <input
-                type="radio"
-                id={method}
-                {...register("payment_method", {
-                  required: "Método de pago es requerido",
-                })}
-                value={method}
-                className="hidden peer"
-              />
-              <label
-                htmlFor={method}
-                className="flex items-center justify-center w-32 h-12 md:w-24 md:h-8 text-lg md:text-xs border-2 border-gray-300 rounded-md cursor-pointer text-center peer-checked:border-cyan-500 peer-checked:text-black transition-all duration-300"
-              >
-                {method}
-              </label>
-            </div>
-          ))}
-          {errors.payment_method && (
-            <p className="text-red-500">{errors.payment_method.message}</p>
-          )}
-        </div>
-
-        <p className="mt-3 mb-1 text-lg md:text-xs">Monto</p>
-        <input
-          type="number"
-          id="amount"
-          {...register("amount", {
-            required: "Monto es requerido",
-            valueAsNumber: true,
-          })}
-          className="border-[#8D8D8D] border-[1.5px] rounded-md text-lg md:text-sm outline-0 bg-transparent px-2 py-2 w-full md:w-1/4 h-12 md:h-8"
-          placeholder="$"
-        />
-        {errors.amount && (
-          <p className="text-red-500">{errors.amount.message}</p>
-        )}
-
-        <p className="mb-1 mt-3 text-lg md:text-xs">Turno</p>
-        <div className="flex flex-wrap justify-between md:justify-normal mb-2 gap-2">
-          {["Mañana", "Tarde"].map((turn) => (
-            <div key={turn} className="w-fit">
-              <input
-                type="radio"
-                id={turn}
-                {...register("turn", { required: "Turno es requerido" })}
-                value={turn}
-                className="hidden peer"
-              />
-              <label
-                htmlFor={turn}
-                className="flex items-center justify-center w-32 h-12 md:w-24 md:h-8 text-lg md:text-xs border-2 border-gray-300 rounded-md cursor-pointer text-center peer-checked:border-cyan-500 peer-checked:text-black transition-all duration-300"
-              >
-                {turn}
-              </label>
-            </div>
-          ))}
-          {errors.turn && <p className="text-red-500">{errors.turn.message}</p>}
-        </div>
-
-        <button
-          type="submit"
-          className="mt-3 block uppercase text-white bg-[#00ADD2] md:text-xs text-lg h-12 md:h-fit rounded-md md:w-1/2 w-full py-[5px]"
+    <main className="text-black text-xs lg:px-4 col-span-2 row-start-2 overflow-y-auto w-[calc(100%_-_32px)] mx-auto mt-4 lg:mx-0 lg:w-full">
+      <h3 className="shadow-lg text-[#] text-2xl py-2 px-6 bg-white w-full rounded-xl border border-[#E0E0E0]">
+        Guardar ventas
+      </h3>
+      <div className=" mt-4 shadow-lg border border-[#E0E0E0] bg-white h-fit w-fit rounded-xl border-separate">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="p-6 space-y-4 rounded-sm"
         >
-          Guardar Venta
-        </button>
-      </form>
+          <div className="flex flex-col">
+            <p className="mb-2 text-lg md:text-xs">Fecha</p>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant={"outline"}
+                  className={cn(
+                    "w-[240px] pl-3 text-left font-normal",
+                    !date && "text-muted-foreground"
+                  )}
+                >
+                  {date ? format(date, "PPP") : <span>Pick a date</span>}
+                  <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  mode="single"
+                  selected={date}
+                  onSelect={(date) => {
+                    setDate(date);
+                    setValue("date", date); // Update react-hook-form with the selected date
+                  }}
+                  disabled={(date) =>
+                    date > new Date() || date < new Date("1900-01-01")
+                  }
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+            {errors.date && (
+              <p className="text-red-500">{errors.date.message}</p>
+            )}
+          </div>
+
+          <div className="flex flex-wrap justify-between md:justify-normal mb-2 gap-2">
+            {["Efectivo", "Transferencia", "Débito", "Crédito"].map(
+              (method) => (
+                <div key={method} className="w-fit">
+                  <input
+                    type="radio"
+                    id={method}
+                    {...register("payment_method", {
+                      required: "Método de pago es requerido",
+                    })}
+                    value={method}
+                    className="hidden peer"
+                  />
+                  <label
+                    htmlFor={method}
+                    className="flex items-center justify-center w-32 h-12 md:w-24 md:h-8 text-lg md:text-xs border-2 border-gray-300 rounded-md cursor-pointer text-center peer-checked:border-cyan-500 peer-checked:text-black transition-all duration-300"
+                  >
+                    {method}
+                  </label>
+                </div>
+              )
+            )}
+            {errors.payment_method && (
+              <p className="text-red-500">{errors.payment_method.message}</p>
+            )}
+          </div>
+
+          <p className="mt-3 mb-1 text-lg md:text-xs">Monto</p>
+          <input
+            type="number"
+            id="amount"
+            {...register("amount", {
+              required: "Monto es requerido",
+              valueAsNumber: true,
+            })}
+            className="border-[#8D8D8D] border-[1.5px] rounded-md text-lg md:text-sm outline-0 bg-transparent px-2 py-2 w-full md:w-1/4 h-12 md:h-8"
+            placeholder="$"
+          />
+          {errors.amount && (
+            <p className="text-red-500">{errors.amount.message}</p>
+          )}
+
+          <p className="mb-1 mt-3 text-lg md:text-xs">Turno</p>
+          <div className="flex flex-wrap justify-between md:justify-normal mb-2 gap-2">
+            {["Mañana", "Tarde"].map((turn) => (
+              <div key={turn} className="w-fit">
+                <input
+                  type="radio"
+                  id={turn}
+                  {...register("turn", { required: "Turno es requerido" })}
+                  value={turn}
+                  className="hidden peer"
+                />
+                <label
+                  htmlFor={turn}
+                  className="flex items-center justify-center w-32 h-12 md:w-24 md:h-8 text-lg md:text-xs border-2 border-gray-300 rounded-md cursor-pointer text-center peer-checked:border-cyan-500 peer-checked:text-black transition-all duration-300"
+                >
+                  {turn}
+                </label>
+              </div>
+            ))}
+            {errors.turn && (
+              <p className="text-red-500">{errors.turn.message}</p>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            className="mt-3 block uppercase text-white bg-[#00ADD2] md:text-xs text-lg h-12 md:h-fit rounded-md md:w-1/2 w-full py-[5px]"
+          >
+            Guardar Venta
+          </button>
+        </form>
+      </div>
     </main>
   );
 }

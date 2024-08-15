@@ -24,7 +24,7 @@ export default function Home() {
   );
 
   return (
-    <main className="px-4 text-black text-xs  col-span-2 row-start-2  overflow-y-auto w-[calc(100%_-_32px)] mx-auto mt-4 lg:mx-0 lg:w-full">
+    <main className="lg:px-4 text-black text-xs  col-span-2 row-start-2  overflow-y-auto w-[calc(100%_-_32px)] mx-auto mt-4 lg:mx-0 lg:w-full">
       <div className=" flex flex-wrap justify-between gap-3">
         <div class="card bg-white shadow-lg rounded-lg p-6">
           <h2 class="text-xl font-semibold text-gray-800">Ventas Totales</h2>

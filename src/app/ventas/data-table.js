@@ -22,7 +22,7 @@ export function DataTable({ columns, data }) {
   });
 
   return (
-    <div className="rounded-md border w-fit">
+    <div className="mt-4 lg:mt-0 shadow-lg border border-[#E0E0E0] order-3 lg:order-2 rounded-md w-full lg:w-fit overflow-y-scroll max-h-[calc(100%_-_48px)] bg-white">
       <Table className="text-xs">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
