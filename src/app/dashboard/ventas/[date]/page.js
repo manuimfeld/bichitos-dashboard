@@ -1,12 +1,12 @@
 "use client";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import reduceAmount from "../../utils/reduceAmunt";
+import reduceAmount from "../../../utils/reduceAmunt";
 import { columns } from "../columns";
 import { DataTable } from "../data-table";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
-import { ChartPie } from "../../components/chart";
+import { ChartPie } from "../../../components/chart";
 
 export default function Sales({ params }) {
   const [sales, setSales] = useState([]);

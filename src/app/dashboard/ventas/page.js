@@ -1,49 +1,25 @@
 "use client";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import reduceAmount from "../utils/reduceAmunt";
+import reduceAmount from "../../utils/reduceAmunt";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
-import { ChartPie } from "../components/chart";
+import { ChartPie } from "../../components/chart";
+import useStore from "../../store/store";
 
 export default function Sales() {
-  const [sales, setSales] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { salesToday, error, loadingToday, fetchSalesToday } = useStore(
+    (state) => ({
+      salesToday: state.salesToday,
+      error: state.error,
+      loadingToday: state.loadingToday,
+      fetchSalesToday: state.fetchSalesToday,
+    })
+  );
 
-  function getToken() {
-    let token = localStorage.getItem("authorization");
-    return token;
-  }
-
-  useEffect(() => {
-    const fetchSales = () => {
-      axios
-        .get(`${process.env.NEXT_PUBLIC_API_URL}/sales/today`, {
-          headers: {
-            authorization: `${getToken()}`,
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-        })
-        .then(function (response) {
-          setSales(response.data);
-        })
-        .catch(function (error) {
-          setError("Error fetching sales");
-          console.error(error);
-        })
-        .finally(function () {
-          setLoading(false);
-        });
-    };
-
-    fetchSales();
-  }, []);
-
-  if (loading)
+  if (loadingToday)
     return (
       <div className="text-black text-xs bg-white col-span-2 row-start-2 p-4 overflow-y-auto w-[calc(100%_-_32px)] mx-auto mt-4 lg:mx-0 lg:w-full">
         <Skeleton className="h-[24px] w-2/4" />
@@ -77,8 +53,8 @@ export default function Sales() {
       <h3 className="shadow-lg text-[#] text-2xl py-2 px-6 bg-white w-full rounded-xl border border-[#E0E0E0]">
         Historial de ventas
       </h3>
-      <DataTable columns={columns} data={sales} />
-      <ChartPie data={sales} totalAmount={reduceAmount(sales)} />
+      <DataTable columns={columns} data={salesToday} />
+      <ChartPie data={salesToday} totalAmount={reduceAmount(salesToday)} />
     </div>
   );
 }

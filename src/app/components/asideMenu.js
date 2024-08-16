@@ -7,7 +7,7 @@ export default function AsideMenu() {
   return (
     <nav className="hidden md:block text-black text-xs md:border-r-[1.5px] md:border-[#E5E7EB] bg-[#11143D] md:row-start-1 md:row-end-3">
       <div className="h-12 flex items-center justify-center">
-        <Link href="/">
+        <Link href="/dashboard">
           <Image src="/bichitos-logo.webp" width={40} height={40} alt="logo" />
         </Link>
       </div>
@@ -27,7 +27,7 @@ export default function AsideMenu() {
             <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9" />
             <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6" />
           </svg>
-          <Link href="/" className="ml-2">
+          <Link href="/dashboard" className="ml-2">
             Inicio
           </Link>
         </li>
@@ -64,7 +64,7 @@ export default function AsideMenu() {
           >
             <path d="M12 20v-6M6 20V10M18 20V4" />
           </svg>
-          <Link href="/ventas" className="ml-2">
+          <Link href="/dashboard/ventas" className="ml-2">
             Ver ventas
           </Link>
         </li>
@@ -83,7 +83,7 @@ export default function AsideMenu() {
             <line x1="12" y1="5" x2="12" y2="19"></line>
             <line x1="5" y1="12" x2="19" y2="12"></line>
           </svg>
-          <Link href="/ventas/crear" className="ml-2">
+          <Link href="/dashboard/ventas/crear" className="ml-2">
             Crear ventas
           </Link>
         </li>
@@ -140,7 +140,7 @@ export default function AsideMenu() {
             <line x1="12" y1="5" x2="12" y2="19"></line>
             <line x1="5" y1="12" x2="19" y2="12"></line>
           </svg>
-          <Link href="/productos/crear" className="ml-2">
+          <Link href="/dashboard/productos/crear" className="ml-2">
             Crear productos
           </Link>
         </li>
@@ -178,7 +178,7 @@ export default function AsideMenu() {
           >
             <path d="M12 20v-6M6 20V10M18 20V4" />
           </svg>
-          <Link href="/gastos">Ver gastos</Link>
+          <Link href="/dashboard/gastos">Ver gastos</Link>
         </li>
         <li className="font-thin mt-1 ml-6 hover:bg-[#292B50] w-fit px-4 py-2 rounded-sm flex items-center">
           <svg
@@ -196,7 +196,7 @@ export default function AsideMenu() {
             <line x1="12" y1="5" x2="12" y2="19"></line>
             <line x1="5" y1="12" x2="19" y2="12"></line>
           </svg>
-          <Link href="/ventas/crear">Crear gastos</Link>
+          <Link href="/dashboard/gastos/crear">Crear gastos</Link>
         </li>
         <li className="font-normal mt-2 hover:bg-[#292B50] w-full px-4 rounded-sm py-2 flex items-center">
           <svg
