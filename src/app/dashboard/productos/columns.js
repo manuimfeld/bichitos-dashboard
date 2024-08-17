@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { DeleteAlertDialogContent } from "../components/deleteButton";
+import { DeleteAlertDialogContent } from "../../components/deleteButton";
 import { EditDialogContent } from "../../components/editButton";
 
 export const columns = [
