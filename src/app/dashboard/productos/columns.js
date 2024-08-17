@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DeleteAlertDialogContent } from "../components/deleteButton";
-import { EditDialogContent } from "../components/editButton";
+import { EditDialogContent } from "../../components/editButton";
 
 export const columns = [
   {
