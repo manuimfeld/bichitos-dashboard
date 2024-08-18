@@ -22,7 +22,7 @@ export function DataTable({ columns, data }) {
   });
 
   return (
-    <div className="mt-4 lg:mt-0 shadow-lg border border-[#E0E0E0] order-3 lg:order-2 rounded-md w-full lg:w-fit overflow-y-scroll max-h-[calc(100%_-_48px)] bg-white">
+    <div className="mt-4 lg:mt-0 shadow-lg border border-[#E0E0E0] order-3 lg:order-2 rounded-md w-full lg:w-fit max-h-[calc(75vh_-_48px)] bg-white overflow-y-scroll">
       <Table className="text-xs">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -57,7 +57,7 @@ export function DataTable({ columns, data }) {
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
+                No hay ventas.
               </TableCell>
             </TableRow>
           )}

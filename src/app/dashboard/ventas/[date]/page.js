@@ -74,8 +74,8 @@ export default function Sales({ params }) {
   }
 
   return (
-    <div className="text-black text-xs bg-white col-span-2 row-start-2 p-4 overflow-y-auto w-[calc(100%_-_32px)] mx-auto mt-4 lg:mx-0 lg:w-full">
-      <h2 className="text-2xl">Historial de ventas</h2>
+    <div className="lg:gap-4 flex flex-wrap lg:justify-normal text-black text-xs mx-auto lg:mx-0 lg:w-full lg:max-h-[calc(100%_-_48px)]">
+      <h3 className="text-2xl py-2 w-full">Historial de ventas</h3>
       <ChartPie data={sales} totalAmount={reduceAmount(sales)} />
       <DataTable columns={columns} data={sales} />
     </div>

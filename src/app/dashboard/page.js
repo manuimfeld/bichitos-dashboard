@@ -37,11 +37,12 @@ export default function Dashboard() {
     }
   }, [router, fetchAllData, dataLoaded]);
 
-  if (loadingToday || loadingExpenses || loadingAll) return;
-
-  <div className="flex flex-wrap justify-between gap-3">
-    <p>Loading data...</p>;
-  </div>;
+  if (loadingToday || loadingExpenses || loadingAll)
+    return (
+      <div className="flex flex-wrap justify-between gap-3">
+        <p>Loading data...</p>;
+      </div>
+    );
 
   if (error)
     return (
