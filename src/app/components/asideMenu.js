@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function AsideMenu() {
   return (
-    <nav className="hidden md:block text-black text-xs md:border-r-[1.5px] md:border-[#E5E7EB] bg-[#11143D] md:row-start-1 md:row-end-3">
+    <nav className="hidden md:block text-black text-xs border-r border-[#E5E7EB] bg-[#11143D] col-start-1 row-start-1 row-end-3">
       <div className="h-12 flex items-center justify-center">
         <Link href="/dashboard">
           <Image src="/bichitos-logo.webp" width={40} height={40} alt="logo" />

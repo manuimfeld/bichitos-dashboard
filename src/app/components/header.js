@@ -23,7 +23,7 @@ const SHEET_SIDES = ["left"];
 export default function Header() {
   const currentLocation = usePathname();
   return (
-    <nav className="p-4 flex items-center text-black text-xs md:border-[1.5px] md:border-t-0 md:border-r-0 md:border-[#E5E7EB] bg-white md:col-span-2 h-12">
+    <header className="col-start-2 row-start-1 row-end-2 bg-white h-12 border-b border-[#E5E7EB] p-4">
       <div className="md:hidden grid grid-cols-1 gap-2 mr-2">
         {SHEET_SIDES.map((side) => (
           <Sheet key={side}>
@@ -220,6 +220,6 @@ export default function Header() {
         ))}
       </div>
       <p>{currentLocation.length <= 1 ? "Inicio" : currentLocation} </p>
-    </nav>
+    </header>
   );
 }

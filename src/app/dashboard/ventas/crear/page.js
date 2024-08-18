@@ -83,11 +83,11 @@ export default function Home() {
   };
 
   return (
-    <main className="text-black text-xs lg:px-4 col-span-2 row-start-2 overflow-y-auto w-[calc(100%_-_32px)] mx-auto mt-4 lg:mx-0 lg:w-full">
+    <div className="lg:gap-4 flex flex-wrap lg:justify-normal text-black text-xs col-span-2 row-start-2 overflow-y-auto w-[calc(100%_-_32px)] mx-auto lg:mx-0 lg:w-full lg:max-h-[calc(100%_-_48px)]">
       <h3 className="shadow-lg text-[#] text-2xl py-2 px-6 bg-white w-full rounded-xl border border-[#E0E0E0]">
         Guardar ventas
       </h3>
-      <div className=" mt-4 shadow-lg border border-[#E0E0E0] bg-white h-fit w-fit rounded-xl border-separate">
+      <div className=" shadow-lg border border-[#E0E0E0] bg-white h-fit w-fit rounded-xl border-separate">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="p-6 space-y-4 rounded-sm"
@@ -201,6 +201,6 @@ export default function Home() {
           </button>
         </form>
       </div>
-    </main>
+    </div>
   );
 }

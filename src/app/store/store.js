@@ -1,12 +1,19 @@
 import { create } from "zustand";
-import { fetchSalesToday, fetchAllSales } from "../services/salesServices";
+import {
+  fetchSalesToday,
+  fetchAllSales,
+  fetchAllExpenses,
+} from "../services/salesServices";
 
 const useStore = create((set) => ({
   salesToday: [],
   allSales: [],
+  allExpenses: [],
   error: null,
   loadingToday: false,
+  loadingExpenses: false,
   loadingAll: false,
+  dataLoaded: false,
 
   fetchSalesToday: async () => {
     set({ loadingToday: true, error: null });
@@ -17,6 +24,18 @@ const useStore = create((set) => ({
       set({ error: "Error fetching today's sales" });
     } finally {
       set({ loadingToday: false });
+    }
+  },
+
+  fetchExpensesMonth: async () => {
+    set({ loadingExpenses: true, error: null });
+    try {
+      const data = await fetchAllExpenses();
+      set({ allExpenses: data });
+    } catch (error) {
+      set({ error: "Error fetching expenses" });
+    } finally {
+      set({ loadingExpenses: false });
     }
   },
 
@@ -33,17 +52,29 @@ const useStore = create((set) => ({
   },
 
   fetchAllData: async () => {
-    set({ loadingToday: true, loadingAll: true, error: null });
+    set({
+      loadingToday: true,
+      loadingExpenses: true,
+      loadingAll: true,
+      error: null,
+    });
     try {
-      const [salesToday, allSales] = await Promise.all([
+      const [salesToday, allExpenses, allSales] = await Promise.all([
         await fetchSalesToday(),
+        await fetchAllExpenses(),
         await fetchAllSales(),
       ]);
-      set({ salesToday, allSales });
+      set({ salesToday, allExpenses, allSales });
     } catch (error) {
-      set({ error: "Error fetching sales data" });
+      alert(error);
+      set({ error: "Error fetching data" });
     } finally {
-      set({ loadingToday: false, loadingAll: false });
+      set({
+        loadingToday: false,
+        loadingExpenses: false,
+        dataLoaded: true,
+        loadingAll: false,
+      });
     }
   },
 }));

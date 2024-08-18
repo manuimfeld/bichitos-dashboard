@@ -17,10 +17,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={roboto.className}>
-      <body className="h-screen w-screen md:grid md:grid-rows-[48px_1fr] md:grid-cols-[19vw_auto] bg-[#FBF7F3] text-black">
+      <body className="h-screen w-screen grid grid-cols-[19vw_auto] grid-rows-[48px_1fr] bg-[#FBF7F3] text-black">
         <Header />
         <AsideMenu />
-        {children}
+        <main className="px-4 col-start-2 row-start-2 text-black text-xs overflow-y-auto w-[calc(100%_-_32px)] mx-auto mt-4 lg:mx-0 lg:w-full">
+          {children}
+        </main>
+
         <Toaster />
       </body>
     </html>

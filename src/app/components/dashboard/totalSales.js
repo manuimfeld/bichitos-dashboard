@@ -1,66 +1,94 @@
 "use client";
-import axios from "axios";
-import { useEffect, useState } from "react";
 
-export default function TotalSales() {
-  const [sales, setSales] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  function getToken() {
-    let token = localStorage.getItem("authorization");
-    return token;
-  }
-
-  useEffect(() => {
-    const fetchSales = () => {
-      axios
-        .get(`${process.env.NEXT_PUBLIC_API_URL}/salestotalmonth`, {
-          headers: {
-            authorization: `${getToken()}`,
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-        })
-        .then(function (response) {
-          setSales(response.data);
-        })
-        .catch(function (error) {
-          setError("Error fetching sales");
-          console.error(error);
-        })
-        .finally(function () {
-          setLoading(false);
-        });
-    };
-
-    fetchSales();
-  }, []);
-  if (loading)
-    return (
-      <div className="text-black text-xs bg-white col-span-2 row-start-2 p-4 overflow-y-auto w-[calc(100%_-_32px)] mx-auto mt-4 lg:mx-0 lg:w-full">
-        <p>Cargando...</p>
-      </div>
-    );
-  if (error)
-    return (
-      <div className="text-black text-xs bg-white col-span-2 row-start-2 p-4 overflow-y-auto w-[calc(100%_-_32px)] mx-auto mt-4 lg:mx-0 lg:w-full">
-        <p>Ha ocurrido un error</p>
-        <p>{error}</p>
-      </div>
-    );
-  if (error) {
-    return (
-      <div className="text-black text-xs bg-white col-span-2 row-start-2 p-4 overflow-y-auto w-[calc(100%_-_32px)] mx-auto mt-4 lg:mx-0 lg:w-full">
-        <p className="mx-auto w-fit">{error}</p>
-      </div>
-    );
-  }
-
+export default function TotalSales({ allSales, allExpenses }) {
   return (
-    <div className="text-black text-xs bg-white col-span-2 row-start-2 p-4 overflow-y-auto w-[calc(100%_-_32px)] mx-auto mt-4 lg:mx-0 lg:w-full">
-      <h2 className="text-2xl">Historial de ventas</h2>
-      <p>{JSON.stringify(sales)}</p>
-    </div>
+    <>
+      <div class="card bg-white shadow-lg rounded-lg p-6 flex items-center">
+        <div class="icon bg-teal-100 p-3 rounded-full">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 text-teal-500"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 8v8m-4-4h8"
+            />
+          </svg>
+        </div>
+        <div class="ml-4">
+          <h2 class="text-xl font-semibold text-gray-800">Ingresos del mes</h2>
+          <p id="ingresos-mes" class="text-3xl font-bold text-green-500 mt-2">
+            $
+            {Intl.NumberFormat(
+              ("es-AR",
+              {
+                style: "currency",
+                currency: "ARS",
+              })
+            ).format(allSales.total_sales)}
+          </p>
+        </div>
+      </div>
+      <div class="card bg-white shadow-lg rounded-lg p-6 flex items-center">
+        <div class="icon bg-blue-100 p-3 rounded-full">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 text-blue-500"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 8v8m-4-4h8"
+            />
+          </svg>
+        </div>
+        <div class="ml-4">
+          <h2 class="text-xl font-semibold text-gray-800">Ventas del mes</h2>
+          <p id="numero-ventas" class="text-3xl font-bold text-blue-500 mt-2">
+            {allSales.total_sales_count} ventas
+          </p>
+        </div>
+      </div>
+      <div class="card bg-white shadow-lg rounded-lg p-6 flex items-center">
+        <div class="icon bg-red-100 p-3 rounded-full">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 text-red-500"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 8v8m-4-4h8"
+            />
+          </svg>
+        </div>
+        <div class="ml-4">
+          <h2 class="text-xl font-semibold text-gray-800">Gastos del mes</h2>
+          <p id="gastos-mes" class="text-3xl font-bold text-red-500 mt-2">
+            $
+            {Intl.NumberFormat(
+              ("es-AR",
+              {
+                style: "currency",
+                currency: "ARS",
+              })
+            ).format(allExpenses.total_expenses_amount)}
+          </p>
+        </div>
+      </div>
+    </>
   );
 }
