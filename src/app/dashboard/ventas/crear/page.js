@@ -70,7 +70,8 @@ export default function Home() {
       })
       .then(function (response) {
         console.log("Venta guardada:", response.data);
-        reset(); // Limpiar el formulario
+        reset({ amount: "" }); // Solo resetear el campo de monto
+
         toast({
           variant: "success",
           title: "Venta guardada",

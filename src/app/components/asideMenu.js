@@ -121,7 +121,7 @@ export default function AsideMenu() {
           >
             <path d="M12 20v-6M6 20V10M18 20V4" />
           </svg>
-          <Link href="/productos" className="ml-2">
+          <Link href="/dashboard/productos" className="ml-2">
             Ver productos
           </Link>
         </li>
