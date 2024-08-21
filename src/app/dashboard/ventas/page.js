@@ -5,7 +5,7 @@ import { columns } from "./columns";
 import { DataTable } from "./data-table";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
-import { ChartPie } from "../../components/chart";
+import { ChartPie } from "../../components/ventas/chart";
 import useStore from "../../store/store";
 
 export default function Sales() {
@@ -26,12 +26,13 @@ export default function Sales() {
 
   if (loadingToday)
     return (
-      <div className="text-black text-xs bg-white col-span-2 row-start-2 overflow-y-auto w-[calc(100%_-_32px)] mx-auto lg:mx-0 lg:w-full">
-        <Skeleton className="h-[24px] w-2/4" />
-        <Skeleton className="h-[15px] w-1/4 mt-4" />
-        <Skeleton className="h-[15px] w-1/4 mt-2" />
-        <Skeleton className="h-[85px] w-full mt-4" />
-      </div>
+      <>
+        <div className="lg:gap-4 flex flex-wrap lg:justify-normal text-black text-xs mx-auto lg:mx-0 lg:w-full lg:max-h-[calc(100%_-_48px)]">
+          <h3 className="text-2xl py-2 w-full">Historial de ventas</h3>
+          <Skeleton className="h-[150px] w-full lg:w-1/2 mt-4" />
+          <Skeleton className="h-[150px]  w-full lg:w-1/4 mt-4" />
+        </div>
+      </>
     );
 
   if (error)
@@ -50,7 +51,11 @@ export default function Sales() {
   return (
     <div className="lg:gap-4 flex flex-wrap lg:justify-normal text-black text-xs mx-auto lg:mx-0 lg:w-full lg:max-h-[calc(100%_-_48px)]">
       <h3 className="text-2xl py-2 w-full">Historial de ventas</h3>
-      <DataTable columns={columns} data={salesToday} />
+      <DataTable
+        columns={columns}
+        data={salesToday}
+        fetchSalesToday={fetchSalesToday}
+      />
       <ChartPie data={salesToday} totalAmount={reduceAmount(salesToday)} />
     </div>
   );

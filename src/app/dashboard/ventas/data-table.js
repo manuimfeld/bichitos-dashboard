@@ -18,8 +18,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import ReloadSvg from "@/app/components/ventas/reloadSvg";
 
-export function DataTable({ columns, data }) {
+export function DataTable({ columns, data, fetchSalesToday }) {
   const [sorting, setSorting] = useState([]); // Inicializar con un array vacío
   const [columnFilters, setColumnFilters] = useState([]); // Inicializar con un array vacío
 
@@ -38,18 +39,19 @@ export function DataTable({ columns, data }) {
   });
 
   return (
-    <div className="mt-4 lg:mt-0 shadow-lg border border-[#E0E0E0] order-3 lg:order-2 rounded-md w-full lg:w-fit max-h-[calc(75vh_-_48px)] bg-white overflow-y-scroll">
-      <div className="flex items-center py-4">
+    <div className="mt-4 lg:mt-0 shadow-lg border border-[#E0E0E0] order-3 lg:order-2 rounded-md w-full lg:w-1/2 max-h-[calc(75vh_-_48px)] bg-white overflow-y-scroll p-4">
+      <div className="flex items-center">
         <Input
-          placeholder="Filter emails..."
-          value={table.getColumn("payment_method_id")?.getFilterValue() ?? ""}
+          placeholder="Filtar por método de pago..."
+          value={table.getColumn("payment_method")?.getFilterValue() ?? ""}
           onChange={(event) =>
             table
-              .getColumn("payment_method_id")
+              .getColumn("payment_method")
               ?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
+        <ReloadSvg onClick={() => fetchSalesToday()} />
       </div>
       <Table className="text-xs">
         <TableHeader>

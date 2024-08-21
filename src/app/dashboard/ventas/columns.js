@@ -11,22 +11,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { DeleteAlertDialogContent } from "../../components/deleteButton";
-import { EditDialogContent } from "../../components/editButton";
+import { DeleteAlertDialogContent } from "../../components/ventas/deleteButton";
+import { EditDialogContent } from "../../components/ventas/editButton";
 
 export const columns = [
   {
-    accessorKey: "payment_method_id",
+    accessorKey: "payment_method",
     header: "Pago",
-    cell: ({ getValue }) => {
-      const paymentMethodMap = {
-        1: "Efectivo",
-        2: "Transferencia",
-        3: "Débito",
-        4: "Crédito",
-      };
-      return paymentMethodMap[getValue()] || getValue();
-    },
   },
   {
     accessorKey: "amount",
@@ -40,13 +31,6 @@ export const columns = [
   {
     accessorKey: "turn",
     header: "Turno",
-    cell: ({ getValue }) => {
-      const turnMethodMap = {
-        1: "Mañana",
-        2: "Tarde",
-      };
-      return turnMethodMap[getValue()] || getValue();
-    },
   },
   {
     id: "actions",

@@ -12,18 +12,6 @@ import { ChartContainer } from "@/components/ui/chart";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
-const methodMapping = {
-  1: "Efectivo",
-  2: "Transferencia",
-  3: "Débito",
-  4: "Crédito",
-};
-
-const turnMethodMap = {
-  1: "Mañana",
-  2: "Tarde",
-};
-
 const colorMapping = {
   Efectivo: "hsl(191, 100%, 41%)",
   Transferencia: "hsl(193, 69%, 53%)",
@@ -35,14 +23,14 @@ const chartConfig = {
   quantity: {
     label: "Cantidad",
   },
-  payment_method_id: {
+  payment_method: {
     label: "Método de Pago",
   },
 };
 
 const transformSalesData = (sales) => {
   const groupedSales = sales.reduce((acc, sale) => {
-    const method = methodMapping[sale.payment_method_id];
+    const method = sale.payment_method;
 
     if (!acc[method]) {
       acc[method] = { quantity: 0, totalAmount: 0 };
@@ -138,8 +126,8 @@ const generatePDF = (sales) => {
     head: [["Monto", "Tipo de Pago", "Turno"]],
     body: sales.map((sale) => [
       parseFloat(sale.amount).toFixed(2), // Asegúrate de mostrar dos decimales
-      methodMapping[sale.payment_method_id],
-      turnMethodMap[sale.turn] || "Desconocido",
+      sale.payment_method,
+      sale.turn || "Desconocido",
     ]),
     styles: {
       fillColor: [240, 240, 240], // Fondo de las celdas
