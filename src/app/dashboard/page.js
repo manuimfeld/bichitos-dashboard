@@ -55,11 +55,11 @@ export default function Dashboard() {
   const latestSalesToday = salesToday.slice(-5);
 
   return (
-    <div className="flex flex-wrap justify-between gap-3">
+    <div className="flex flex-wrap justify-center md:justify-between gap-3">
       <TotalSales allSales={allSales} allExpenses={allExpenses} />
-      <div className="flex flex-col gap-4 p-4">
-        <div className="card bg-white bg-opacity-20 shadow-lg rounded-lg p-6 backdrop-filter backdrop-blur-lg">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">
+      <div className="flex flex-col gap-4">
+        <div className="bg-white bg-opacity-20 shadow-lg rounded-lg p-4 backdrop-filter backdrop-blur-lg">
+          <h2 className="text-xl font-semibold text-gray-800 ">
             Últimas 5 Ventas
           </h2>
           <table className="w-full table-fixed text-center">
