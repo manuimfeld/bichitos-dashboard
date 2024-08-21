@@ -1,6 +1,5 @@
 "use client";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import reduceAmount from "../../utils/reduceAmunt";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
@@ -19,6 +18,12 @@ export default function Sales() {
     })
   );
 
+  useEffect(() => {
+    if (salesToday.length === 0) {
+      fetchSalesToday();
+    }
+  }, [salesToday, fetchSalesToday]);
+
   if (loadingToday)
     return (
       <div className="text-black text-xs bg-white col-span-2 row-start-2 overflow-y-auto w-[calc(100%_-_32px)] mx-auto lg:mx-0 lg:w-full">
@@ -28,6 +33,7 @@ export default function Sales() {
         <Skeleton className="h-[85px] w-full mt-4" />
       </div>
     );
+
   if (error)
     return (
       <div className="text-black text-xs bg-white col-span-2 row-start-2 overflow-y-auto w-[calc(100%_-_32px)] mx-auto lg:mx-0 lg:w-full">
@@ -40,13 +46,6 @@ export default function Sales() {
         </Link>
       </div>
     );
-  if (error) {
-    return (
-      <div className="text-black text-xs bg-white col-span-2 row-start-2 overflow-y-auto w-[calc(100%_-_32px)] mx-auto lg:mx-0 lg:w-full">
-        <p className="mx-auto w-fit">{error}</p>
-      </div>
-    );
-  }
 
   return (
     <div className="lg:gap-4 flex flex-wrap lg:justify-normal text-black text-xs mx-auto lg:mx-0 lg:w-full lg:max-h-[calc(100%_-_48px)]">
