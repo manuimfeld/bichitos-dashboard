@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 import axios from "axios";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function Home() {
@@ -22,6 +22,7 @@ export default function Home() {
   const {
     register,
     handleSubmit,
+    resetField,
     formState: { errors },
     setValue,
     reset,
@@ -30,7 +31,7 @@ export default function Home() {
       amount: "",
       payment_method: "",
       turn: "",
-      date: new Date(),
+      date: date,
     },
   });
 
@@ -60,6 +61,7 @@ export default function Home() {
       created_by: 1, // Ajusta esto según tus necesidades
       turn: turnMapping[data.turn], // 'Mañana' o 'Tarde'
     };
+
     axios
       .post(`${process.env.NEXT_PUBLIC_API_URL}/sales`, saleData, {
         headers: {
@@ -70,7 +72,7 @@ export default function Home() {
       })
       .then(function (response) {
         console.log("Venta guardada:", response.data);
-        reset({ amount: "" }); // Solo resetear el campo de monto
+        resetField("amount"); // Solo resetear el campo de monto
 
         toast({
           variant: "success",
