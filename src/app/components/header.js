@@ -1,13 +1,9 @@
 "use client";
-
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
@@ -17,6 +13,14 @@ import Link from "next/link";
 import { logout } from "../utils/logout";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 const SHEET_SIDES = ["left"];
 
@@ -223,6 +227,21 @@ export default function Header() {
         <p className="w-fit">
           {currentLocation.length <= 1 ? "Inicio" : currentLocation}{" "}
         </p>
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link href="/dashboard">Dashboard</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link href="/dashboard/ventas">Ventas</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
       </div>
     </header>
   );
