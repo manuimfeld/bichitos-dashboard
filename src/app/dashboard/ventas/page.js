@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import reduceAmount from "../../utils/reduceAmunt";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
@@ -17,12 +17,13 @@ export default function Sales() {
       fetchSalesToday: state.fetchSalesToday,
     })
   );
+  const [hasFetched, setHasFetched] = useState(false);
 
   useEffect(() => {
-    if (salesToday.length === 0) {
-      fetchSalesToday();
+    if (hasFetched && salesToday.length === 0) {
+      fetchSalesToday().finally(() => setHasFetched(true));
     }
-  }, [salesToday, fetchSalesToday]);
+  }, [salesToday, hasFetched, fetchSalesToday]);
 
   if (loadingToday)
     return (
