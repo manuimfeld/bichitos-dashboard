@@ -80,7 +80,7 @@ export default function Header() {
                       <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9" />
                       <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6" />
                     </svg>
-                    <Link href="/" className="ml-1">
+                    <Link href="/dashboard" className="ml-1">
                       Inicio
                     </Link>
                   </li>
@@ -117,7 +117,7 @@ export default function Header() {
                     >
                       <path d="M12 20v-6M6 20V10M18 20V4" />
                     </svg>
-                    <Link href="/ventas" className="ml-1">
+                    <Link href="/dashboard/ventas" className="ml-1">
                       Ver ventas
                     </Link>
                   </li>
@@ -136,7 +136,7 @@ export default function Header() {
                       <line x1="12" y1="5" x2="12" y2="19"></line>
                       <line x1="5" y1="12" x2="19" y2="12"></line>
                     </svg>
-                    <Link href="/ventas/crear" className="ml-1">
+                    <Link href="/dashboard/ventas/crear" className="ml-1">
                       Crear ventas
                     </Link>
                   </li>
@@ -174,7 +174,7 @@ export default function Header() {
                     >
                       <path d="M12 20v-6M6 20V10M18 20V4" />
                     </svg>
-                    <Link href="/gastos">Ver gastos</Link>
+                    <Link href="/dashboard/gastos">Ver gastos</Link>
                   </li>
                   <li className=" mt-1 ml-6 hover:bg-[#EDEDED] w-fit px-2 flex items-center">
                     <svg
@@ -192,7 +192,63 @@ export default function Header() {
                       <line x1="12" y1="5" x2="12" y2="19"></line>
                       <line x1="5" y1="12" x2="19" y2="12"></line>
                     </svg>
-                    <Link href="/ventas/crear">Crear gastos</Link>
+                    <Link href="/dashboard/gastos/crear">Crear gastos</Link>
+                  </li>
+
+                  <li className="font-normal mt-2 hover:bg-[#EDEDED] w-full px-2 flex items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#000000"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="mr-1"
+                    >
+                      <rect x="2" y="4" width="20" height="16" rx="2" />
+                      <path d="M7 15h0M2 9.5h20" />
+                    </svg>
+                    Productos
+                  </li>
+                  <li className=" mt-1 ml-6 hover:bg-[#EDEDED] w-fit px-2 flex items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#000000"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="mr-1"
+                    >
+                      <path d="M12 20v-6M6 20V10M18 20V4" />
+                    </svg>
+                    <Link href="/dashboard/productos">Ver productos</Link>
+                  </li>
+                  <li className=" mt-1 ml-6 hover:bg-[#EDEDED] w-fit px-2 flex items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#000000"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="mr-1"
+                    >
+                      <line x1="12" y1="5" x2="12" y2="19"></line>
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    <Link href="/dashboard/productos/crear">
+                      Crear productos
+                    </Link>
                   </li>
                   <li className=" mt-2 hover:bg-[#EDEDED] w-full px-2 flex items-center">
                     <svg
