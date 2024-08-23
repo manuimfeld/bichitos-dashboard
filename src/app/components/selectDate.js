@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-export default function SelectDate() {
+export default function SelectDate({ params }) {
   const [date, setDate] = useState(new Date());
 
   const router = useRouter();
@@ -35,9 +35,9 @@ export default function SelectDate() {
     const formattedCurrentDate = format(currentDate, "yyyy-MM-dd");
 
     if (formattedDate === formattedCurrentDate) {
-      router.push(`/dashboard/ventas/`);
+      router.push(`/dashboard/${params}/`);
     } else {
-      router.push(`/dashboard/ventas/${formattedDate}`);
+      router.push(`/dashboard/${params}/${formattedDate}`);
     }
   };
 
@@ -78,7 +78,7 @@ export default function SelectDate() {
           type="submit"
           className="inline uppercase text-white bg-[#00ADD2] md:text-xs text-md h-10 md:h-fit rounded-md md:w-fit w-fit md:py-3 px-4 md:px-4 mt-2 md:mt-0 md:ml-2"
         >
-          Buscar ventas
+          Buscar {params}
         </button>
       </div>
     </form>
