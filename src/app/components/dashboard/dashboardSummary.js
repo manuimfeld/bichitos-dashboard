@@ -251,8 +251,8 @@ export default function DashboardSummary({
                       currency: "ARS",
                     }).format(sale.amount)}
                   </td>
-                  <td className="py-2">{sale.payment_method_id}</td>
-                  <td className="py-2">{sale.amount}</td>
+                  <td className="py-2">{sale.payment_method}</td>
+                  <td className="py-2">{sale.turn}</td>
                 </tr>
               ))}
             </tbody>
