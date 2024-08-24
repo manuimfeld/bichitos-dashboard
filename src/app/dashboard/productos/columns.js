@@ -14,32 +14,57 @@ import {
 import { DeleteAlertDialogContent } from "../../components/ventas/deleteButton";
 import { EditDialogContent } from "../../components/ventas/editButton";
 
+const formatWeight = (weight) => {
+  // Redondear el peso a un decimal y luego convertirlo en número entero si el decimal es .0
+  return weight % 1 === 0 ? weight.toFixed(0) : weight.toFixed(1);
+};
+
 export const columns = [
+  {
+    accessorKey: "product_brand",
+    header: "Marca",
+  },
   {
     accessorKey: "product_name",
     header: "Nombre",
-    cell: ({ getValue }) => {
-      const paymentMethodMap = {
-        1: "Efectivo",
-        2: "Transferencia",
-        3: "Débito",
-        4: "Crédito",
-      };
-      return paymentMethodMap[getValue()] || getValue();
-    },
   },
   {
-    accessorKey: "product_price",
-    header: "Precio",
+    accessorKey: "product_weight",
+    header: "Peso",
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("product_price"));
-      const roundedAmount = Math.floor(amount);
-      return roundedAmount;
+      const weight = parseFloat(row.getValue("product_weight"));
+      // Formatear el peso para mostrar sin decimales si es entero
+      const displayWeight =
+        weight % 1 === 0 ? weight.toFixed(0) : weight.toFixed(1);
+      return `${displayWeight}KG`;
     },
   },
   {
-    accessorKey: "provider_name",
-    header: "Proveedor",
+    accessorKey: "cost_price",
+    header: "Precio de lista",
+    cell: ({ row }) => {
+      const amount = parseFloat(row.getValue("cost_price"));
+      return `$${amount.toFixed(2)}`;
+    },
+  },
+  {
+    accessorKey: "markup_percentage_kg",
+    header: "Precio por Kg",
+    cell: ({ row }) => {
+      const total =
+        (row.original.cost_price * row.original.markup_percentage_kg) /
+        row.original.product_weight;
+      return `$${Math.floor(total)}`;
+    },
+  },
+  {
+    accessorKey: "price_per_bag",
+    header: "Precio por Bolson",
+    cell: ({ row }) => {
+      const total =
+        row.original.cost_price * row.original.markup_percentage_bag;
+      return `$${total}`;
+    },
   },
   {
     id: "actions",
