@@ -5,13 +5,13 @@ import Image from "next/image";
 
 export default function AsideMenu() {
   return (
-    <nav className="hidden md:block text-black text-xs border-r border-[#E5E7EB] bg-[#11143D] col-start-1 row-start-1 row-end-3">
+    <nav className="hidden md:block  text-xs border-r border-[#E5E7EB]  col-start-1 row-start-1 row-end-3 dark:bg-[#11143D] dark:text-white light:bg-[#F5F5F5]">
       <div className="h-12 flex items-center justify-center">
         <Link href="/dashboard">
           <Image src="/bichitos-logo.webp" width={40} height={40} alt="logo" />
         </Link>
       </div>
-      <ul className="text-[16px] flex flex-col items-start text-white font-light w-full px-10 mt-2">
+      <ul className="text-[16px] flex flex-col items-start dark:text-white text-black font-light w-full px-10 mt-2">
         <li className="font-normal mt-2 hover:bg-[#292B50] w-full px-4 rounded-sm py-2 flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"

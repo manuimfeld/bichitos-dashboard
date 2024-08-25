@@ -13,11 +13,15 @@ import Link from "next/link";
 import { logout } from "../utils/logout";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useTheme } from "next-themes";
+import { Moon, Sun } from "lucide-react";
 
 const SHEET_SIDES = ["left"];
 
 export default function Header() {
   const currentLocation = usePathname();
+  const { theme, setTheme } = useTheme();
+
   return (
     <header className="col-start-1 col-end-3 row-start-1 row-end-2 md:col-start-2 md:row-start-1 md:row-end-2 bg-white h-12 border-b border-[#E5E7EB] md:p-4">
       <div className="flex items-center w-full h-full">
@@ -275,6 +279,17 @@ export default function Header() {
         <p className="w-fit">
           {currentLocation.length <= 1 ? "Inicio" : currentLocation}{" "}
         </p>
+        {theme === "light" ? (
+          <>
+            <Moon className="h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            <button onClick={() => setTheme("dark")}>Modo oscuro</button>
+          </>
+        ) : (
+          <>
+            <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+            <button onClick={() => setTheme("light")}>Modo claro</button>
+          </>
+        )}
       </div>
     </header>
   );
