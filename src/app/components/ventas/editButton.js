@@ -41,31 +41,17 @@ import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
   amount: z
-    .string()
-    .regex(/^\d+$/, { message: "Monto debe ser un número válido sin letras" }) // Asegura que solo contiene dígitos
+    .number()
     .min(1, { message: "Monto es requerido" }) // Asegura que el monto no esté vacío
-    .max(10, { message: "Monto debe tener un máximo de 10 caracteres" }), // Asegura un máximo de caracteres
+    .max(999999, { message: "Monto debe tener un máximo de 10 caracteres" }), // Asegura un máximo de caracteres
 
-  payment_method_id: z
-    .string()
-    .min(1, { message: "Método de pago es requerido" }), // Asegura que el campo no esté vacío
+  payment_method: z.string().min(1, { message: "Método de pago es requerido" }), // Asegura que el campo no esté vacío
   turn: z.enum(["Mañana", "Tarde"], {
     message: "Turno debe ser 'mañana' o 'tarde'",
   }), // Asegura que solo puede ser 'mañana' o 'tarde'
 
   sale_date: z.date(),
 });
-
-const methodMapping = {
-  1: "Efectivo",
-  2: "Transferencia",
-  3: "Débito",
-  4: "Crédito",
-};
-const turnMapping = {
-  1: "Mañana",
-  2: "Tarde",
-};
 
 export const EditDialogContent = ({ sale }) => {
   const { toast } = useToast();
@@ -79,19 +65,15 @@ export const EditDialogContent = ({ sale }) => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       amount: sale.amount,
-      payment_method_id: Object.keys(methodMapping).find(
-        (key) => methodMapping[key] === sale.payment_method_id
-      ),
-      turn: Object.keys(turnMapping).find(
-        (key) => turnMapping[key] === sale.turn
-      ),
+      payment_method: sale.payment_method,
+      turn: sale.turn,
       sale_date: sale.sale_date ? new Date(sale.sale_date) : new Date(),
     },
   });
 
   const onSubmit = (data) => {
     const updatedSaleData = {
-      payment_method_id: data.payment_method_id,
+      payment_method_id: data.payment_method,
       amount: data.amount,
       turn: data.turn,
       sale_date: data.sale_date,
@@ -123,7 +105,7 @@ export const EditDialogContent = ({ sale }) => {
   };
 
   return (
-    <DialogContent>
+    <DialogContent className="max-h-[75vh] overflow-y-scroll">
       <DialogHeader>
         <DialogTitle>Editar venta</DialogTitle>
         <DialogDescription>Cambie los valores de la venta</DialogDescription>
@@ -169,7 +151,7 @@ export const EditDialogContent = ({ sale }) => {
                     </PopoverContent>
                   </Popover>
                   <FormDescription>
-                    Your date of birth is used to calculate your age.
+                    Seleccione la fecha de la venta
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -178,7 +160,7 @@ export const EditDialogContent = ({ sale }) => {
 
             <FormField
               control={form.control}
-              name="payment_method_id"
+              name="payment_method"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Método de pago</FormLabel>
@@ -188,7 +170,7 @@ export const EditDialogContent = ({ sale }) => {
                       defaultValue={field.value}
                     >
                       <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Pago" />
+                        <SelectValue placeholder="Método de pago" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="Efectivo">Efectivo</SelectItem>
@@ -217,7 +199,7 @@ export const EditDialogContent = ({ sale }) => {
                   <FormControl>
                     <Input
                       type="number"
-                      {...field}
+                      defaultValue={field.value}
                       placeholder="Ingrese el monto"
                     />
                   </FormControl>
