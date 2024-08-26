@@ -28,7 +28,7 @@ export default function Sales() {
   if (loadingToday)
     return (
       <>
-        <div className="lg:gap-4 flex flex-wrap lg:justify-normal text-black text-xs mx-auto lg:mx-0 lg:w-full lg:max-h-[calc(100%_-_48px)]">
+        <div className="lg:gap-4 flex flex-wrap lg:justify-normal text-black dark:text-white text-xs mx-auto lg:mx-0 lg:w-full lg:max-h-[calc(100%_-_48px)]">
           <h3 className="text-2xl py-2 w-full">Historial de ventas</h3>
           <Skeleton className="h-[150px] w-full lg:w-1/2 mt-4" />
           <Skeleton className="h-[150px]  w-full lg:w-1/4 mt-4" />

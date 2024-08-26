@@ -5,21 +5,21 @@ import Image from "next/image";
 
 export default function AsideMenu() {
   return (
-    <nav className="hidden md:block  text-xs border-r border-[#E5E7EB]  col-start-1 row-start-1 row-end-3 dark:bg-[#11143D] dark:text-white light:bg-[#F5F5F5]">
+    <nav className="hidden md:block text-xs border-r border-[#E5E7EB] dark:border-[#2D2F40] col-start-1 row-start-1 row-end-3 dark:bg-[#020817] dark:text-white text-black bg-white">
       <div className="h-12 flex items-center justify-center">
         <Link href="/dashboard">
           <Image src="/bichitos-logo.webp" width={40} height={40} alt="logo" />
         </Link>
       </div>
-      <ul className="text-[16px] flex flex-col items-start dark:text-white text-black font-light w-full px-10 mt-2">
-        <li className="font-normal mt-2 hover:bg-[#292B50] w-full px-4 rounded-sm py-2 flex items-center">
+      <ul className="text-[16px] flex flex-col items-start font-light w-full px-10 mt-2">
+        <li className="font-normal mt-2 hover:bg-[#f5f5f5] dark:hover:bg-[#2D2F40] w-full px-4 rounded-sm py-2 flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
             height="18"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#ffffff"
+            stroke="currentColor"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -31,14 +31,14 @@ export default function AsideMenu() {
             Inicio
           </Link>
         </li>
-        <li className="font-normal mt-2 hover:bg-[#292B50] w-full px-4 rounded-sm py-2 flex items-center">
+        <li className="font-normal mt-2 hover:bg-[#f5f5f5] dark:hover:bg-[#2D2F40] w-full px-4 rounded-sm py-2 flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
             height="18"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#ffffff"
+            stroke="currentColor"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -50,14 +50,14 @@ export default function AsideMenu() {
           </svg>
           Ventas
         </li>
-        <li className="font-thin mt-1 ml-4 hover:bg-[#292B50] w-fit px-4 py-2 rounded-sm flex items-center">
+        <li className="font-light mt-1 ml-6 hover:bg-[#f0f4f8] dark:hover:bg-[#2D2F40] w-fit px-4 py-2 rounded-sm flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
             height="18"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#ffffff"
+            stroke="currentColor"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -68,14 +68,14 @@ export default function AsideMenu() {
             Ver ventas
           </Link>
         </li>
-        <li className="font-thin mt-1 ml-4 hover:bg-[#292B50] w-fit px-4 py-2 rounded-sm flex items-center">
+        <li className="font-light mt-1 ml-6 hover:bg-[#f0f4f8] dark:hover:bg-[#2D2F40] w-fit px-4 py-2 rounded-sm flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
             height="18"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#ffffff"
+            stroke="currentColor"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -88,14 +88,14 @@ export default function AsideMenu() {
           </Link>
         </li>
 
-        <li className="font-normal mt-2 hover:bg-[#292B50] w-full px-4 rounded-sm py-2 flex items-center">
+        <li className="font-normal mt-2 hover:bg-[#f5f5f5] dark:hover:bg-[#2D2F40] w-full px-4 rounded-sm py-2 flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
             height="18"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#ffffff"
+            stroke="currentColor"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -107,14 +107,14 @@ export default function AsideMenu() {
           </svg>
           Productos
         </li>
-        <li className="font-thin mt-1 ml-4 hover:bg-[#292B50] w-fit px-4 py-2 rounded-sm flex items-center">
+        <li className="font-light mt-1 ml-6 hover:bg-[#f0f4f8] dark:hover:bg-[#2D2F40] w-fit px-2 py-2 rounded-sm flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
             height="18"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#ffffff"
+            stroke="currentColor"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -125,14 +125,14 @@ export default function AsideMenu() {
             Ver productos
           </Link>
         </li>
-        <li className="font-thin mt-1 ml-4 hover:bg-[#292B50] w-fit px-4 py-2 rounded-sm flex items-center">
+        <li className="font-light mt-1 ml-6 hover:bg-[#f0f4f8] dark:hover:bg-[#2D2F40] w-fit px-2 py-2 rounded-sm flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
             height="18"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#ffffff"
+            stroke="currentColor"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -145,14 +145,14 @@ export default function AsideMenu() {
           </Link>
         </li>
 
-        <li className="font-normal mt-2 hover:bg-[#292B50] w-full px-4 rounded-sm py-2 flex items-center">
+        <li className="font-normal mt-2 hover:bg-[#f5f5f5] dark:hover:bg-[#2D2F40] w-full px-4 rounded-sm py-2 flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
             height="18"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#ffffff"
+            stroke="currentColor"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -163,14 +163,14 @@ export default function AsideMenu() {
           </svg>
           Gastos
         </li>
-        <li className="font-thin mt-1 ml-6 hover:bg-[#292B50] w-fit px-4 py-2 rounded-sm flex items-center">
+        <li className="font-light mt-1 ml-6 hover:bg-[#f0f4f8] dark:hover:bg-[#2D2F40] w-fit px-4 py-2 rounded-sm flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
             height="18"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#ffffff"
+            stroke="currentColor"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -180,14 +180,14 @@ export default function AsideMenu() {
           </svg>
           <Link href="/dashboard/gastos">Ver gastos</Link>
         </li>
-        <li className="font-thin mt-1 ml-6 hover:bg-[#292B50] w-fit px-4 py-2 rounded-sm flex items-center">
+        <li className="font-light mt-1 ml-6 hover:bg-[#f0f4f8] dark:hover:bg-[#2D2F40] w-fit px-4 py-2 rounded-sm flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
             height="18"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#ffffff"
+            stroke="currentColor"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -205,7 +205,7 @@ export default function AsideMenu() {
             height="18"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#ffffff"
+            stroke="currentColor"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
