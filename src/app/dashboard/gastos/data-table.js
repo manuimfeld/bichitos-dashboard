@@ -40,7 +40,7 @@ export function DataTable({ columns, data }) {
   });
 
   return (
-    <div className="mt-4 lg:mt-0 shadow-lg border border-[#E0E0E0] order-3 lg:order-2 rounded-md w-full bg-white p-4">
+    <div className="mt-4 lg:mt-0 shadow-lg border border-[#2D2F40] order-3 lg:order-2 rounded-md w-full p-4">
       <SelectDate params="gastos" />
       <div className="flex items-center">
         <Input

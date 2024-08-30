@@ -43,7 +43,7 @@ export default function Sales() {
 
   if (loading)
     return (
-      <div className="text-black text-xs bg-white col-span-2 row-start-2 p-4 overflow-y-auto w-[calc(100%_-_32px)] mx-auto mt-4 lg:mx-0 lg:w-full">
+      <div className="text-xs col-span-2 row-start-2 p-4 overflow-y-auto w-[calc(100%_-_32px)] mx-auto mt-4 lg:mx-0 lg:w-full">
         <Skeleton className="h-[24px] w-2/4" />
         <Skeleton className="h-[15px] w-1/4 mt-4" />
         <Skeleton className="h-[15px] w-1/4 mt-2" />
@@ -52,7 +52,7 @@ export default function Sales() {
     );
   if (error)
     return (
-      <div className="text-black text-xs bg-white col-span-2 row-start-2 p-4 overflow-y-auto w-[calc(100%_-_32px)] mx-auto mt-4 lg:mx-0 lg:w-full">
+      <div className="text-xs col-span-2 row-start-2 p-4 overflow-y-auto w-[calc(100%_-_32px)] mx-auto mt-4 lg:mx-0 lg:w-full">
         <p>Ha ocurrido un error, por favor inicia sesión</p>
         <Link
           href="/login"
@@ -62,16 +62,9 @@ export default function Sales() {
         </Link>
       </div>
     );
-  if (error) {
-    return (
-      <div className="text-black text-xs bg-white col-span-2 row-start-2 p-4 overflow-y-auto w-[calc(100%_-_32px)] mx-auto mt-4 lg:mx-0 lg:w-full">
-        <p className="mx-auto w-fit">{error}</p>
-      </div>
-    );
-  }
 
   return (
-    <div className="text-black text-xs bg-white col-span-2 row-start-2 p-4 overflow-y-auto w-[calc(100%_-_32px)] mx-auto mt-4 lg:mx-0 lg:w-full">
+    <div className="text-xs col-span-2 row-start-2 p-4 overflow-y-auto w-[calc(100%_-_32px)] mx-auto mt-4 lg:mx-0 lg:w-full">
       <h2 className="text-2xl">Historial de ventas</h2>
       <DataTable columns={columns} data={expenses} />
     </div>

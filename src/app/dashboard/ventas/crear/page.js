@@ -86,9 +86,9 @@ export default function Home() {
   };
 
   return (
-    <div className="lg:gap-4 flex flex-wrap lg:justify-normal text-black text-xs col-span-2 row-start-2 overflow-y-auto w-[calc(100%_-_32px)] mx-auto lg:mx-0 lg:w-full lg:max-h-[calc(100%_-_48px)]">
+    <div className="lg:gap-4 flex flex-wrap lg:justify-normal text-xs col-span-2 row-start-2 overflow-y-auto w-[calc(100%_-_32px)] mx-auto lg:mx-0 lg:w-full lg:max-h-[calc(100%_-_48px)]">
       <h3 className="text-2xl py-2 w-full">Guardar ventas</h3>
-      <div className=" shadow-lg border border-[#E0E0E0] bg-white h-fit w-fit rounded-xl border-separate">
+      <div className="shadow-lg border border-[#2d2f40] h-fit w-fit rounded-xl border-separate">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="p-6 space-y-4 rounded-sm"
@@ -143,7 +143,7 @@ export default function Home() {
                   />
                   <label
                     htmlFor={method}
-                    className="flex items-center justify-center w-32 h-12 md:w-24 md:h-8 text-lg md:text-xs border-2 border-gray-300 rounded-md cursor-pointer text-center peer-checked:border-cyan-500 peer-checked:text-black transition-all duration-300"
+                    className="flex items-center justify-center w-32 h-12 md:w-24 md:h-8 text-lg md:text-xs border-2 border-[#2d2f40] rounded-md cursor-pointer text-center peer-checked:border-cyan-500 transition-all duration-300"
                   >
                     {method}
                   </label>
@@ -163,7 +163,7 @@ export default function Home() {
               required: "Monto es requerido",
               valueAsNumber: true,
             })}
-            className="border-[#8D8D8D] border-[1.5px] rounded-md text-lg md:text-sm outline-0 bg-transparent px-2 py-2 w-full md:w-1/4 h-12 md:h-8"
+            className="border-[#2d2f40] border-[1.5px] rounded-md text-lg md:text-sm outline-0 bg-transparent px-2 py-2 w-full md:w-1/4 h-12 md:h-8"
             placeholder="$"
           />
           {errors.amount && (
@@ -183,7 +183,7 @@ export default function Home() {
                 />
                 <label
                   htmlFor={turn}
-                  className="flex items-center justify-center w-32 h-12 md:w-24 md:h-8 text-lg md:text-xs border-2 border-gray-300 rounded-md cursor-pointer text-center peer-checked:border-cyan-500 peer-checked:text-black transition-all duration-300"
+                  className="flex items-center justify-center w-32 h-12 md:w-24 md:h-8 text-lg md:text-xs border-2 border-[#2d2f40] rounded-md cursor-pointer text-center peer-checked:border-cyan-500 transition-all duration-300"
                 >
                   {turn}
                 </label>
